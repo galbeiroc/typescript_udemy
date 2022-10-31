@@ -7,6 +7,9 @@
 *number:* all bumber s, no differentiation between intergers or floats
 *string* all text values
 *boolean:* true or flase just these two values
+*object:* more specific types (type of object) are possible
+*array:* type can be flexible or strict (regarding the element types)
+*tuple:* fixed-array lenght
 ##### 02- TypeScript Basics #####
 ##### 03- Compiler & Configurations Deep Dive #####
 ##### 04- Working with Next-gen JS Code #####

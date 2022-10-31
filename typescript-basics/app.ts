@@ -1,8 +1,18 @@
-const person = {
+const person: {
+  name: string;
+  age: number;
+  hobbies: string[],
+  role: [number, string]
+} = {
   name: 'Albeiro',
   age: 33,
-  hobbies: ['Sports', 'Cooking']
+  hobbies: ['Sports', 'Cooking'],
+  role: [2, 'author'] // Tuple Fixed array lenght (number | string)[]
 }
+
+// person.role.push('admin') ts does'nt catch error with push
+// person.role[1] = 10 errors
+person.role = [1, 'admin']
 
 let favoriteActivities: string[];
 favoriteActivities = ['Sports'];

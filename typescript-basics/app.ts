@@ -1,9 +1,15 @@
-function add(num1: number, num2: number) {
-  return num1 + num2;
+function add(num1: number, num2: number, showResult: boolean, pharse: string) {
+  const result = num1 + num2
+  if (showResult) {
+    console.log(pharse + result)
+  } else {
+    return result;
+  }
 }
 
 const number1 = 5;
 const number2 = 2.8;
+const printResult = true;
+const resultPharse = 'Result is: ';
 
-const result = add(number1, number2);
-console.log(result);
+const result = add(number1, number2, printResult, resultPharse);

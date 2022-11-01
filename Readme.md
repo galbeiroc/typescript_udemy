@@ -12,6 +12,7 @@
 *array:* type can be flexible or strict (regarding the element types)
 *tuple:* fixed-array lenght
 *enum:* automatically enumerated global constant identifiers
+*any:* any kind of value, no specific type assigment
 ##### 03- Compiler & Configurations Deep Dive #####
 ##### 04- Working with Next-gen JS Code #####
 ##### 05- Classes & Interfaces #####

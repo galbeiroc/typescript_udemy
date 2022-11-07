@@ -46,6 +46,16 @@ function printText(s: string, alignment: "left" | "right" | "center") {}
 printText("Hello, world", "left"); // Ok
 printText("G'day, mate", "centre"); // Error
 ```
+
+**Type Aliases / Custom Types**
+A type alias is exactly that - a name for any type. The syntax for a type alias is:
+
+```typescript
+type ID = number | string;
+
+function combine(id: ID) {}
+```
+
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

@@ -38,6 +38,14 @@ printId("202"); // Ok
 printId({ myID: 22342 }); // Error
 ```
 
+**Literal Types**
+In addition to the general types string and number, we can refer to specific strings and numbers in type positions.
+```typescript
+function printText(s: string, alignment: "left" | "right" | "center") {}
+
+printText("Hello, world", "left"); // Ok
+printText("G'day, mate", "centre"); // Error
+```
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

@@ -55,6 +55,21 @@ type ID = number | string;
 
 function combine(id: ID) {}
 ```
+**Type Aliases & Object Types**
+Type aliases can be used to "create" your own types. You're not limited to storing union types though - you can also provide an alias to a (possibly complex) object type.
+
+```typescript
+type User = { name: string; age: number };
+const u1: User = { name: 'Max', age: 30 }
+```
+
+This allows you to avoid unnecessary repetition and manage types centrally.
+
+```typescript
+function greet(user: User) {}
+
+function isOlder(user: User, checkAge: number) {}
+```
 
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###

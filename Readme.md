@@ -1,17 +1,161 @@
-## TYPESCRIPT ##
+# TYPESCRIPT #
 
-### COURSE OUTLINE ###
+## COURSE OUTLINE ##
 
-##### 01- Getting Started #####
-##### 02- TypeScript Basics #####
-##### 03- Compiler & Configurations Deep Dive #####
-##### 04- Working with Next-gen JS Code #####
-##### 05- Classes & Interfaces #####
-##### 06- Advanced Types & TypeScript Features #####
-##### 07- Generics #####
-##### 08- Decorators #####
-##### 09- Time to Practice - Full Project #####
-##### 10- Working with Namespaces & Modules #####
-##### 12- Webpack and TypeScript #####
-##### 13- Webpack and TypeScript #####
-##### 14- React + TypeScript & node + TypeScript #####
+### 01- Getting Started ###
+
+> Link for downloading  [TypeScirpt](https://www.typescriptlang.org/download).
+> [Docs](https://www.typescriptlang.org/docs/).
+> We will need a copy of [Node.js](https://nodejs.org/en/download/) as an environment to run the package. Then you use a dependency manager like [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/) or [pnpm](https://pnpm.io/) to download TypeScript into your project.
+  - `npm install typescript --save-dev`
+  - `yarn add typescript --dev`
+  - `pnpm add typescript -D`
+> All of these dependency managers support lockfiles, ensuring that everyone on your team is using the same version of the language. You can then run the TypeScript compiler using one of the following commands:
+  - `npx tsc`
+  - `yarn tsc`
+  - `pnpm tsc`
+
+### 02- TypeScript Basics ###
+- Core Types
+
+* *number:* all bumber s, no differentiation between intergers or floats.
+* *string* all text values.
+* *boolean:* true or flase just these two values.
+* *object:* more specific types (type of object) are possible.
+* *array:* type can be flexible or strict (regarding the element types).
+* *tuple:* fixed-array lenght.
+* *enum:* automatically enumerated global constant identifiers.
+* *any:* any kind of value, no specific type assigment. `any` disables all types checking.
+
+**Unions Types**
+The first way to combine types you might see is a *union* type. A *union* type is a type formed from two or more other types, representing values that may be any one of those types. We refer to each of these types as the union’s members.
+Example:
+```typescript
+function printId(id: number | string) {}
+
+printId(101); // Ok
+printId("202"); // Ok
+
+printId({ myID: 22342 }); // Error
+```
+
+**Literal Types**
+In addition to the general types string and number, we can refer to specific strings and numbers in type positions.
+```typescript
+function printText(s: string, alignment: "left" | "right" | "center") {}
+
+printText("Hello, world", "left"); // Ok
+printText("G'day, mate", "centre"); // Error
+```
+
+**Type Aliases / Custom Types**
+A type alias is exactly that - a name for any type. The syntax for a type alias is:
+
+```typescript
+type ID = number | string;
+
+function combine(id: ID) {}
+```
+**Type Aliases & Object Types**
+Type aliases can be used to "create" your own types. You're not limited to storing union types though - you can also provide an alias to a (possibly complex) object type.
+
+```typescript
+type User = { name: string; age: number };
+const u1: User = { name: 'Max', age: 30 }
+```
+
+This allows you to avoid unnecessary repetition and manage types centrally.
+
+```typescript
+function greet(user: User) {}
+
+function isOlder(user: User, checkAge: number) {}
+```
+
+- Core Types & Concepts
+
+**Function Return Type & Void**
+The function overall, has one important adverb type. It has a return type is inferred by Typescipt. The colon after the parameter list describe the return type of the function.
+
+The `void` return type for functions can produce some unusual, but expected behavior.
+Contextual typing with a return type of `void` does **not** force functions to **not** return something.
+
+```typescript
+function add(n1: number, n2: number): number {
+  return n1 + n2;
+}
+
+function printResult(num: number): void {
+  console.log('The Result is: ', num);
+}
+printResult(add(5, 6));
+```
+**Function as Types**
+Function is a type provided by Typescript in the end, and this makes it clear that whatever we store in here has to be a function. Functions types allow us to describe which type of function specifically we want to use somewhere.
+
+```typescript
+let combineValues: (a: number, b: number) => number;
+combineValues = add;
+
+console.log(combineValues(8, 8));
+```
+
+**Function Types & Callbacks**
+```typescript
+function addAndHandler(n1: number, n2: number, cb: (num: number) => void) {
+  const result = n1+ n2;
+  cb(result);
+}
+
+addAndHandler(20, 40, (result) => {
+  console.log(result);
+});
+addAndHandler(10, 10, printResult);
+```
+
+**The 'unknonw' Type**
+There are two more types which are good to be aware of because they will matter from time to time.
+The `unknown` type represents any value. This is similar to the `any` type, but is safer because it’s not legal to do anything with an `unknown` value. 
+
+```typescript
+let userInput: unknown;
+let userName: string;
+
+userInput = 20;
+userInput = 'a string';
+
+userName = userInput; // Type 'unknown' is not assignable to type 'string'.
+```
+
+`unknown` is a bit more restrictive than `any`. unknown check the type that's currently stored in variable before we can assign it.
+
+```typescript
+if (typeof userInput === 'string') {
+  userName = userInput;
+}
+```
+So we need to such an extra check here with `unknown` to be able to assign an unkonwn value to a value with a fixed type, and therefore `unknown` is the better choice over `any`. If we know we can't tell exactly what type We'll store in there.
+
+**The 'never' Type**
+The `never` is another type function. Some functions `never` return a value.
+The `never` type represents values which are never observed. In a return type, this means that the function throws an exception or terminates execution of the program.
+
+```typescript
+function generatorError(message: string, code: number): never {
+  throw { message, code };
+}
+
+generatorError('An error ocurred!', 500);
+```
+
+### 03- Compiler & Configurations Deep Dive ###
+### 04- Working with Next-gen JS Code ###
+### 05- Classes & Interfaces ###
+### 06- Advanced Types & TypeScript Features ###
+### 07- Generics ###
+### 08- Decorators ###
+### 09- Time to Practice - Full Project ###
+### 10- Working with Namespaces & Modules ###
+### 12- Webpack and TypeScript ###
+### 13- Webpack and TypeScript ###
+### 14- React + TypeScript & node + TypeScript ###

@@ -25,7 +25,7 @@
 * *array:* type can be flexible or strict (regarding the element types).
 * *tuple:* fixed-array lenght.
 * *enum:* automatically enumerated global constant identifiers.
-* *any:* any kind of value, no specific type assigment.
+* *any:* any kind of value, no specific type assigment. `any` disables all types checking.
 
 **Unions Types**
 The first way to combine types you might see is a *union* type. A *union* type is a type formed from two or more other types, representing values that may be any one of those types. We refer to each of these types as the union’s members.
@@ -112,6 +112,29 @@ addAndHandler(20, 40, (result) => {
 });
 addAndHandler(10, 10, printResult);
 ```
+
+**The 'unknonw' Type**
+There are two more types which are good to be aware of because they will matter from time to time.
+The `unknown` type represents any value. This is similar to the `any` type, but is safer because it’s not legal to do anything with an `unknown` value. 
+
+```typescript
+let userInput: unknown;
+let userName: string;
+
+userInput = 20;
+userInput = 'a string';
+
+userName = userInput; // Type 'unknown' is not assignable to type 'string'.
+```
+
+`unknown` is a bit more restrictive than `any`. unknown check the type that's currently stored in variable before we can assign it.
+
+```typescript
+if (typeof userInput === 'string') {
+  userName = userInput;
+}
+```
+So we need to such an extra check here with `unknown` to be able to assign an unkonwn value to a value with a fixed type, and therefore `unknown` is the better choice over `any`. If we know we can't tell exactly what type We'll store in there.
 
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###

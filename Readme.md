@@ -16,7 +16,8 @@
   - `pnpm tsc`
 
 ### 02- TypeScript Basics ###
-- Core Types**
+- Core Types
+
 * *number:* all bumber s, no differentiation between intergers or floats.
 * *string* all text values.
 * *boolean:* true or flase just these two values.
@@ -72,6 +73,7 @@ function isOlder(user: User, checkAge: number) {}
 ```
 
 - Core Types & Concepts
+
 **Function Return Type & Void**
 The function overall, has one important adverb type. It has a return type is inferred by Typescipt. The colon after the parameter list describe the return type of the function.
 
@@ -87,6 +89,15 @@ function printResult(num: number): void {
   console.log('The Result is: ', num);
 }
 printResult(add(5, 6));
+```
+**Function as Types**
+Function is a type provided by Typescript in the end, and this makes it clear that whatever we store in here has to be a function. Functions types allow us to describe which type of function specifically we want to use somewhere.
+
+```typescript
+let combineValues: (a: number, b: number) => number;
+combineValues = add;
+
+console.log(combineValues(8, 8));
 ```
 
 ### 03- Compiler & Configurations Deep Dive ###

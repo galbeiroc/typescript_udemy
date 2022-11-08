@@ -136,6 +136,18 @@ if (typeof userInput === 'string') {
 ```
 So we need to such an extra check here with `unknown` to be able to assign an unkonwn value to a value with a fixed type, and therefore `unknown` is the better choice over `any`. If we know we can't tell exactly what type We'll store in there.
 
+**The 'never' Type**
+The `never` is another type function. Some functions `never` return a value.
+The `never` type represents values which are never observed. In a return type, this means that the function throws an exception or terminates execution of the program.
+
+```typescript
+function generatorError(message: string, code: number): never {
+  throw { message, code };
+}
+
+generatorError('An error ocurred!', 500);
+```
+
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

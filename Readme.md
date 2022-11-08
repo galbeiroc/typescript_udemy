@@ -16,7 +16,7 @@
   - `pnpm tsc`
 
 ### 02- TypeScript Basics ###
-**Core Types**
+- Core Types**
 * *number:* all bumber s, no differentiation between intergers or floats.
 * *string* all text values.
 * *boolean:* true or flase just these two values.
@@ -69,6 +69,24 @@ This allows you to avoid unnecessary repetition and manage types centrally.
 function greet(user: User) {}
 
 function isOlder(user: User, checkAge: number) {}
+```
+
+- Core Types & Concepts
+**Function Return Type & Void**
+The function overall, has one important adverb type. It has a return type is inferred by Typescipt. The colon after the parameter list describe the return type of the function.
+
+The `void` return type for functions can produce some unusual, but expected behavior.
+Contextual typing with a return type of `void` does **not** force functions to **not** return something.
+
+```typescript
+function add(n1: number, n2: number): number {
+  return n1 + n2;
+}
+
+function printResult(num: number): void {
+  console.log('The Result is: ', num);
+}
+printResult(add(5, 6));
 ```
 
 ### 03- Compiler & Configurations Deep Dive ###

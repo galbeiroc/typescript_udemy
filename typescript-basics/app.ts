@@ -1,25 +1,8 @@
-type Combineble = number | string;
-type ConversionDescriptor = 'as-number' | 'as-string';
-
-function combine(
-  input1: Combineble,
-  input2: Combineble,
-  resultConversion: ConversionDescriptor
-) {
-  let result;
-  if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
-    result = +input1 + +input2;
-  } else {
-    result = input1.toString() + input2.toString();
-  }
-  return result;
+function add(n1: number, n2: number): number {
+  return n1 + n2;
 }
 
-const combineAges = combine(30, 33, 'as-number');
-console.log(combineAges);
-
-const combineStringAges = combine('30', '33', 'as-number');
-console.log(combineStringAges);
-
-const combineNames = combine('Albeiro', 'Crespo', 'as-string');
-console.log(combineNames)
+function printResult(num: number): void {
+  console.log('The Result is: ', num);
+}
+printResult(add(5, 6));

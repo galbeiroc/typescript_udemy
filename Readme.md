@@ -100,6 +100,19 @@ combineValues = add;
 console.log(combineValues(8, 8));
 ```
 
+**Function Types & Callbacks**
+```typescript
+function addAndHandler(n1: number, n2: number, cb: (num: number) => void) {
+  const result = n1+ n2;
+  cb(result);
+}
+
+addAndHandler(20, 40, (result) => {
+  console.log(result);
+});
+addAndHandler(10, 10, printResult);
+```
+
 ### 03- Compiler & Configurations Deep Dive ###
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

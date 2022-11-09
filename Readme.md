@@ -184,9 +184,22 @@ We can include and exclude files, folder and subfolders in the file `tsconfig.js
   ]
 ```
 **Setting a Compilation Target**
-`compilerOptions` this allow us to control how our types code is compiled.
-`"target": "es2016",` this set by default this options is to tell TypeScript which
+`compilerOptions: {}` this allow us to control how our types code is compiled.
+`"target": "es2016"` this set by default this options is to tell TypeScript which
 target JavaScript version we want to compile the code. It also compiles the code to JavaScript that runs in certain set of browsers.
+
+**Understanding TypeScript Core Libs**
+`"lib": []` lib is a option that allows us to specify wich default objects and features TypeScript knows.
+```json
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM", // This is an identifier TS understands basically unlocks all the DOM api in TS
+      "DOM.Iterable"
+    ],
+  }
+}
+```
 
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

@@ -1,6 +1,5 @@
-let age: number;
-age = 30;
+const button = document.querySelector('button');
 
-const username = 'Albeiro Crespo';
-
-console.log(username);
+button?.addEventListener('click', () => {
+  console.log('Clinking');
+})

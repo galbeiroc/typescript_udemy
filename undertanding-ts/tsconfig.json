@@ -106,7 +106,8 @@
   "exclude": [
     "*.dev.ts"
   ],
-  "files": [
+  "include": [
+    "analytics.ts",
     "app.ts"
   ]
 }

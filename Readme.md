@@ -201,6 +201,25 @@ target JavaScript version we want to compile the code. It also compiles the code
 }
 ```
 
+**More Configuration & Compilation Options**
+```json
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM", // This is an identifier TS understands basically unlocks all the DOM api in TS
+      "DOM.Iterable"
+    ],
+    /* JavaScript Support */
+    "allowJs": true, // Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files.
+    "checkJs": true, // Enable error reporting in type-checked JavaScript files.
+    "jsx": "preserve", // Specify what JSX code is generated.
+    "declaration": true, // Generate .d.ts files from TypeScript and JavaScript files in your project.
+    "declarationMap": true, // Create sourcemaps for d.ts files.
+  }
+}
+```
+
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

@@ -229,8 +229,10 @@ target JavaScript version we want to compile the code. It also compiles the code
     "outDir": "./dist", // Specify an output folder for all emitted files.
     "rootDir": "./src", // Specify the root folder within your source files.
     "removeComments": true, // Disable emitting comments in js files.
+    "noEmitOnError": true, // Disable emitting files if any type checking errors are reported.
   }
 }
+```
 
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

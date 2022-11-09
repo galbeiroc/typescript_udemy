@@ -233,6 +233,21 @@ target JavaScript version we want to compile the code. It also compiles the code
   }
 }
 ```
+**Strict Compilitation**
+```json
+{
+  "compilerOptions": {
+    /* Type Checking */
+    "strict": true, // Enable all strict type-checking options.
+    "noImplicitAny": false, // Enable error reporting for expressions and declarations with an implied 'any' type. Not for variables.
+    "strictNullChecks": false, // Enable strict null checks
+    "strictFunctionTypes": true, // When assigning functions, check to ensure parameters and the return values are subtype-compatible.
+    "strictBindCallApply": true, // Check that the arguments for 'bind', 'call', and 'apply' methods match the original function.
+    "strictPropertyInitialization": true, // Check for class properties that are declared but not set in the constructor.
+    "noImplicitThis": true, // Enable error reporting when 'this' is given the type 'any'.
+  }
+}
+```
 
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###

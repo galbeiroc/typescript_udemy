@@ -222,6 +222,16 @@ target JavaScript version we want to compile the code. It also compiles the code
 **Working SourceMap**
 `"sourceMap": true` help us with debbuging and development. It is super convinient beacuse that really takes our debugging process to the next level, because we can work directly in out files. basically in our TypeScript files instead of the JavaScript files.
 
+**rootDir and outDir**
+```json
+{
+  "compilerOptions": {
+    "outDir": "./dist", // Specify an output folder for all emitted files.
+    "rootDir": "./src", // Specify the root folder within your source files.
+    "removeComments": true, // Disable emitting comments in js files.
+  }
+}
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

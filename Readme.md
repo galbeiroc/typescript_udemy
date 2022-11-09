@@ -164,6 +164,26 @@ Run this command is TypeScript project, that means it will now basically tell Ty
 We have into project a new file `tsconfig.json`.
 Now we are ble to run `tsc` and compile all TypeScript files in the project. I we need to watch all changes run this `tsc -w`.
 
+**Including & Excluding Files**
+We can include and exclude files, folder and subfolders in the file `tsconfig.json`.
+```json
+{
+  "compilerOptions": {
+    ...
+  },
+  "exclude": [ // Exlcude files, folder and subfolder
+    "node_modules",
+    "*.dev.ts"
+  ],
+  "include": [ // Exlcude files, folder and subfolder
+    "analytics.ts",
+    "app.ts"
+  ],
+  "files": [ // Include files, we can`t pecifiy folders
+    "app.ts"
+  ]
+```
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

@@ -149,6 +149,121 @@ generatorError('An error ocurred!', 500);
 ```
 
 ### 03- Compiler & Configurations Deep Dive ###
+**Watch mode**
+We can tell TypeScript to watch file, and whenever that file changes, TypeScript will recompile. Watch mode is already a big imporevement.
+
+`tsc app.ts -w`  or  `tsc app.ts -watch`
+
+**Compiling The Entire Project / Multiples Files**
+We need to tell TypeScript that is one project that should be managed with TypeScript.
+
+`tsc --init`
+
+Run this command is TypeScript project, that means it will now basically tell TypeScript that everything in the folder where we run this command, project folder where my files are so that this project is now managed by TypeScript.
+
+We have into project a new file `tsconfig.json`.
+Now we are ble to run `tsc` and compile all TypeScript files in the project. I we need to watch all changes run this `tsc -w`.
+
+**Including & Excluding Files**
+We can include and exclude files, folder and subfolders in the file `tsconfig.json`.
+```json
+{
+  "compilerOptions": {
+    ...
+  },
+  "exclude": [ // Exlcude files, folder and subfolder
+    "node_modules",
+    "*.dev.ts"
+  ],
+  "include": [ // Exlcude files, folder and subfolder
+    "analytics.ts",
+    "app.ts"
+  ],
+  "files": [ // Include files, we can`t pecifiy folders
+    "app.ts"
+  ]
+```
+**Setting a Compilation Target**
+`compilerOptions: {}` this allow us to control how our types code is compiled.
+`"target": "es2016"` this set by default this options is to tell TypeScript which
+target JavaScript version we want to compile the code. It also compiles the code to JavaScript that runs in certain set of browsers.
+
+**Understanding TypeScript Core Libs**
+`"lib": []` lib is a option that allows us to specify wich default objects and features TypeScript knows.
+```json
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM", // This is an identifier TS understands basically unlocks all the DOM api in TS
+      "DOM.Iterable"
+    ],
+  }
+}
+```
+
+**More Configuration & Compilation Options**
+```json
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM", // This is an identifier TS understands basically unlocks all the DOM api in TS
+      "DOM.Iterable"
+    ],
+    /* JavaScript Support */
+    "allowJs": true, // Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files.
+    "checkJs": true, // Enable error reporting in type-checked JavaScript files.
+    "jsx": "preserve", // Specify what JSX code is generated.
+    "declaration": true, // Generate .d.ts files from TypeScript and JavaScript files in your project.
+    "declarationMap": true, // Create sourcemaps for d.ts files.
+  }
+}
+```
+
+**Working SourceMap**
+`"sourceMap": true` help us with debbuging and development. It is super convinient beacuse that really takes our debugging process to the next level, because we can work directly in our files. basically in our TypeScript files instead of the JavaScript files.
+
+**rootDir and outDir**
+```json
+{
+  "compilerOptions": {
+    "outDir": "./dist", // Specify an output folder for all emitted files.
+    "rootDir": "./src", // Specify the root folder within your source files.
+    "removeComments": true, // Disable emitting comments in js files.
+    "noEmitOnError": true, // Disable emitting files if any type checking errors are reported.
+  }
+}
+```
+**Strict Compilitation**
+```json
+{
+  "compilerOptions": {
+    /* Type Checking */
+    "strict": true, // Enable all strict type-checking options.
+    "noImplicitAny": false, // Enable error reporting for expressions and declarations with an implied 'any' type. Not for variables.
+    "strictNullChecks": false, // Enable strict null checks
+    "strictFunctionTypes": true, // When assigning functions, check to ensure parameters and the return values are subtype-compatible.
+    "strictBindCallApply": true, // Check that the arguments for 'bind', 'call', and 'apply' methods match the original function.
+    "strictPropertyInitialization": true, // Check for class properties that are declared but not set in the constructor.
+    "noImplicitThis": true, // Enable error reporting when 'this' is given the type 'any'.
+  }
+}
+```
+
+**Code Quality Options**
+```json
+{
+  "compilerOptions": {
+    "noUnusedLocals": true, // Enable error reporting when local variables aren't read.
+    "noUnusedParameters": true, // Raise an error when a function parameter isn't read.
+    "noImplicitReturns": true, // Enable error reporting for codepaths that do not explicitly return in a function.
+  }
+}
+```
+**Useful Resources & Links**
+* (tsconfig Docs: )[https://www.typescriptlang.org/docs/handbook/tsconfig-json.html]
+* (Compiler Config Docs: )[https://www.typescriptlang.org/docs/handbook/compiler-options.html]
+* (TS Debugging: )[https://code.visualstudio.com/docs/typescript/typescript-debugging]
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

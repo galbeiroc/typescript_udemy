@@ -249,6 +249,16 @@ target JavaScript version we want to compile the code. It also compiles the code
 }
 ```
 
+**Code Quality Options**
+```json
+{
+  "compilerOptions": {
+    "noUnusedLocals": true, // Enable error reporting when local variables aren't read.
+    "noUnusedParameters": true, // Raise an error when a function parameter isn't read.
+    "noImplicitReturns": true, // Enable error reporting for codepaths that do not explicitly return in a function.
+  }
+}
+```
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

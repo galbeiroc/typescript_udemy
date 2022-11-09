@@ -154,6 +154,16 @@ We can tell TypeScript to watch file, and whenever that file changes, TypeScript
 
 `tsc app.ts -w`  or  `tsc app.ts -watch`
 
+**Compiling The Entire Project / Multiples Files**
+We need to tell TypeScript that is one project that should be managed with TypeScript.
+
+`tsc --init`
+
+Run this command is TypeScript project, that means it will now basically tell TypeScript that everything in the folder where we run this command, project folder where my files are so that this project is now managed by TypeScript.
+
+We have into project a new file `tsconfig.json`.
+Now we are ble to run `tsc` and compile all TypeScript files in the project. I we need to watch all changes run this `tsc -w`.
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

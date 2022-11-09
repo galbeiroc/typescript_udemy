@@ -149,6 +149,11 @@ generatorError('An error ocurred!', 500);
 ```
 
 ### 03- Compiler & Configurations Deep Dive ###
+**Watch mode**
+We can tell TypeScript to watch file, and whenever that file changes, TypeScript will recompile. Watch mode is already a big imporevement.
+
+`tsc app.ts -w`  or  `tsc app.ts -watch`
+
 ### 04- Working with Next-gen JS Code ###
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###

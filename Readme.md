@@ -265,6 +265,21 @@ target JavaScript version we want to compile the code. It also compiles the code
 * (TS Debugging: )[https://code.visualstudio.com/docs/typescript/typescript-debugging]
 
 ### 04- Working with Next-gen JS Code ###
+**let and const**
+(Next-gen JS Feature Table)[https://kangax.github.io/compat-table/es6/]
+`const` are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment.
+```typescript
+const userName = 'Albeiro';
+userName = 'Crespo'; // Error
+```
+`let` declaration declares a block-scoped local variable, optionally initializing it to a value.
+A block is basically allways a snippet sorrounded with curly braces.
+```typescript
+let age = 30;
+age = 31; // Ok
+```
+
+
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

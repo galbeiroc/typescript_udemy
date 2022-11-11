@@ -291,6 +291,12 @@ const printOutput: (a: string | number) => void = output => console.log(output);
 const getValue = () => console.log('get value'); // no parameters
 ```
 
+**Default Parameters**
+Default function parameters allow named parameters to be initialized with default values if no value or undefined is passed.
+```typescript
+const add = (a: number, b: number = 5) => a + b;
+console.log(add(2)) // 7
+```
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

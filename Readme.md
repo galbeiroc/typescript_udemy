@@ -297,6 +297,27 @@ Default function parameters allow named parameters to be initialized with defaul
 const add = (a: number, b: number = 5) => a + b;
 console.log(add(2)) // 7
 ```
+
+**The Spread Operator (...)**
+Spread operator (`...`) allows us to quickly copy all or part of an existing array or object into another array or object.
+
+```typescript
+// Array
+const hobbies = ['Sports', 'Cooking'];
+const activeHobbies = ['Hiking', ...hobbies]; // 1t option
+activeHobbies.push(...hobbies); // 2d option
+const copyArr = [...hobbies];  // copy
+
+// Object
+const person = {
+  name: 'galbeiro',
+  age: 30
+};
+
+const copiedPerson = person; // bad
+const copiedPerson = { ...person}; // good
+```
+
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

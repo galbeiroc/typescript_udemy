@@ -1,8 +1,8 @@
 const userName = 'Albeiro';
 // userName = 'Crespo';
-let age = 30;
+let age1 = 30;
 
-age = 33;
+age1 = 33;
 
 const add = (a: number, b: number = 5) => a + b; // one expression
 
@@ -17,14 +17,18 @@ button.addEventListener('click', event => console.log(event));
 const hobbies = ['Sports', 'Cooking'];
 const activeHobbies = ['Hiking', ...hobbies];
 
-activeHobbies.push(...hobbies);
+// activeHobbies.push(...hobbies);
 
-console.log(activeHobbies);
+const [hobby1, hobby2, ...remainingHobbies] = activeHobbies;
+
+console.log(hobby1, hobby2, remainingHobbies);
 
 const person = {
-  name: 'galbeiro',
+  firstName: 'galbeiro',
   age: 30
 };
+
+const { firstName, age } = person;
 
 const copiedPerson1 = person; // bad
 const copiedPerson2 = { ...person}; // good
@@ -35,3 +39,5 @@ const addNumbers = (...numbers: number[]) => {
 
 const addedNumbers = addNumbers(5, 4, 3, 2, 2.5);
 console.log(addedNumbers);
+
+

@@ -325,6 +325,28 @@ const addNumbers = (...numbers: number[]) => {
 }
 const addedNumbers = addNumbers(5, 4, 3, 2, 2.5);
 ```
+
+**Array & Object Destruturing**
+The `destructuring` assignment syntax is a *JavaScript* expression that makes it possible to unpack values from arrays, or properties from objects.
+The important thing is for array destructuring elements are pulled out in order because an array is an ordered list.
+
+```typescript
+const hobbies = ['Sports', 'Cooking', 'Hiking'];
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+console.log(activeHobbies, remainingHobbies); // 'Sports' 'Cooking' ['Hiking']
+```
+In object the order s not always guaranteed, we don't pull elements out by position. But by key name.
+
+```typescript
+const person = {
+  firstName: 'galbeiro',
+  age: 30
+};
+const { firstName, age } = person;
+const { firstName: userName, age } = person; // override firstName
+```
+
+
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

@@ -350,6 +350,19 @@ const { firstName: userName, age } = person; // override firstName
 **What are Classes**
 Define how object look like, which properties and methods they have. Classes are a template for creating objects.
 
+One way to define a class is using a class declaration. To declare a class, you use the class keyword with the name of the class ("Department" here)
+
+```typescript
+class Department {
+  name: string;
+
+  constructor(n: string) {
+    this.name = n;
+  }
+}
+const accounting = new Department('Accounting');
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

@@ -265,6 +265,88 @@ target JavaScript version we want to compile the code. It also compiles the code
 * (TS Debugging: )[https://code.visualstudio.com/docs/typescript/typescript-debugging]
 
 ### 04- Working with Next-gen JS Code ###
+**let and const**
+(Next-gen JS Feature Table)[https://kangax.github.io/compat-table/es6/]
+`const` are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment.
+```typescript
+const userName = 'Albeiro';
+userName = 'Crespo'; // Error
+```
+`let` declaration declares a block-scoped local variable, optionally initializing it to a value.
+A block is basically allways a snippet sorrounded with curly braces.
+```typescript
+let age = 30;
+age = 31; // Ok
+```
+
+**Arrow Function**
+An arrow function expression is a compact alternative to a traditional function expression, with some semantic differences and deliberate limitations in usage.
+* Arrow functions don't have their own bindings to `this`, `arguments`, or `super`, and should not be used as `methods`.
+* Arrow functions cannot be used as constructors. Calling them with `new` throws a `TypeError`. They also don't have access to the `new.target` keyword.
+* Arrow functions cannot use `yield` within their body and cannot be created as generator functions.
+
+```typescript
+const add = (a: number, b: number) => a + b; // one expression
+const printOutput: (a: string | number) => void = output => console.log(output); // one parameter
+const getValue = () => console.log('get value'); // no parameters
+```
+
+**Default Parameters**
+Default function parameters allow named parameters to be initialized with default values if no value or undefined is passed.
+```typescript
+const add = (a: number, b: number = 5) => a + b;
+console.log(add(2)) // 7
+```
+
+**The Spread Operator (...)**
+Spread operator (`...`) allows us to quickly copy all or part of an existing array or object into another array or object.
+
+```typescript
+// Array
+const hobbies = ['Sports', 'Cooking'];
+const activeHobbies = ['Hiking', ...hobbies]; // 1t option
+activeHobbies.push(...hobbies); // 2d option
+const copyArr = [...hobbies];  // copy
+// Object
+const person = {
+  name: 'galbeiro',
+  age: 30
+};
+const copiedPerson = person; // bad
+const copiedPerson = { ...person}; // good
+```
+
+**The Rest Parameters**
+The rest parameter (`...`) allows a function to treat an indefinite number of arguments as an array.
+
+```typescript
+const addNumbers = (...numbers: number[]) => {
+  return numbers.reduce((curResult, curValue) => curResult + curValue ,0)
+}
+const addedNumbers = addNumbers(5, 4, 3, 2, 2.5);
+```
+
+**Array & Object Destruturing**
+The `destructuring` assignment syntax is a *JavaScript* expression that makes it possible to unpack values from arrays, or properties from objects.
+The important thing is for array destructuring elements are pulled out in order because an array is an ordered list.
+
+```typescript
+const hobbies = ['Sports', 'Cooking', 'Hiking'];
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+console.log(activeHobbies, remainingHobbies); // 'Sports' 'Cooking' ['Hiking']
+```
+In object the order s not always guaranteed, we don't pull elements out by position. But by key name.
+
+```typescript
+const person = {
+  firstName: 'galbeiro',
+  age: 30
+};
+const { firstName, age } = person;
+const { firstName: userName, age } = person; // override firstName
+```
+
+
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

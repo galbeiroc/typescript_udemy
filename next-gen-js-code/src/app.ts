@@ -28,3 +28,10 @@ const person = {
 
 const copiedPerson1 = person; // bad
 const copiedPerson2 = { ...person}; // good
+
+const addNumbers = (...numbers: number[]) => {
+  return numbers.reduce((curResult, curValue) => curResult + curValue ,0)
+}
+
+const addedNumbers = addNumbers(5, 4, 3, 2, 2.5);
+console.log(addedNumbers);

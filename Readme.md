@@ -307,17 +307,24 @@ const hobbies = ['Sports', 'Cooking'];
 const activeHobbies = ['Hiking', ...hobbies]; // 1t option
 activeHobbies.push(...hobbies); // 2d option
 const copyArr = [...hobbies];  // copy
-
 // Object
 const person = {
   name: 'galbeiro',
   age: 30
 };
-
 const copiedPerson = person; // bad
 const copiedPerson = { ...person}; // good
 ```
 
+**The Rest Parameters**
+The rest parameter (`...`) allows a function to treat an indefinite number of arguments as an array.
+
+```typescript
+const addNumbers = (...numbers: number[]) => {
+  return numbers.reduce((curResult, curValue) => curResult + curValue ,0)
+}
+const addedNumbers = addNumbers(5, 4, 3, 2, 2.5);
+```
 ### 05- Classes & Interfaces ###
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

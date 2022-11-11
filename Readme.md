@@ -346,8 +346,10 @@ const { firstName, age } = person;
 const { firstName: userName, age } = person; // override firstName
 ```
 
-
 ### 05- Classes & Interfaces ###
+**What are Classes**
+Define how object look like, which properties and methods they have. Classes are a template for creating objects.
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

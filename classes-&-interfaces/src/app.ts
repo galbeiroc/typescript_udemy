@@ -1,13 +1,15 @@
 class Department {
-  private name: string; //property
+  // private id: string;
+  // private name: string; //property
   private employees: string[] = [];
 
-  constructor(n: string) { //constructor
-    this.name = n;
-  }
+  constructor(private id: string, public name: string) {} //constructor
+    // this.name = n;
+    // this.id = id;
+  // }
 
   describe(this: Department) { //method
-    console.log('Department: ', this.name);
+    console.log(`Department (${this.id}): ${this.name}`);
   }
 
   addEmployes(employee: string) {
@@ -20,7 +22,7 @@ class Department {
   }
 }
 
-const accounting = new Department('Accounting');
+const accounting = new Department('D1', 'Accounting');
 accounting.addEmployes('galbeiroc');
 accounting.addEmployes('crespo');
 // accounting.employees[0] = 'yane'; Error

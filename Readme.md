@@ -390,6 +390,14 @@ accountingCopy.describe(); // Error
 `public` (default) allows access to the class member from anywhere
 `private` only allows access to the class member from within the class.
 (JavaScript Private & Public Fields)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields]
+
+*Shorthand Initialization*
+```typescript
+class Department {
+  constructor(private id: string, public name: string) {}
+}
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

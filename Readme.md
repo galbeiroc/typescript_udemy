@@ -386,6 +386,7 @@ accountingCopy.describe();
 const accountingCopy = { describe: accounting.describe };
 accountingCopy.describe(); // Error
 ```
+
 **'private' and 'public' Access Modifiers**
 `public` (default) allows access to the class member from anywhere
 `private` only allows access to the class member from within the class.
@@ -395,6 +396,15 @@ accountingCopy.describe(); // Error
 ```typescript
 class Department {
   constructor(private id: string, public name: string) {}
+}
+```
+
+**readonly**
+This keyword is introducing by TypeScript, it doesn't exist in JavaScript. the `readonly` keyword can prevent class members from being changed.
+
+```typescript
+class Department {
+  constructor(private readonly id: string, public name: string) {}
 }
 ```
 

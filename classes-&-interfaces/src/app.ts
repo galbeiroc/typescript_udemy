@@ -3,7 +3,7 @@ class Department {
   // private name: string; //property
   private employees: string[] = [];
 
-  constructor(private id: string, public name: string) {} //constructor
+  constructor(private readonly id: string, public name: string) {} //constructor
     // this.name = n;
     // this.id = id;
   // }

@@ -412,9 +412,11 @@ class Department {
 Inheritance allows us to define a class that inherits all the methods and properties from another class.
 *Parent* class is the class being inherited from, also called base class.
 *Child* class is the class that inherits from another class, also called derived class.
+Classes can extend each other through the `extends` keyword.
+
 ```typescript
 class Department {
-  private employees: string[] = [];
+  private employees: string[] = []; // private modifier
   constructor(private readonly id: string, public name: string) {} //constructor
 
   describe(this: Department) { ... }
@@ -454,6 +456,50 @@ const accounting = new AccountingDepartment('D2', []);
 accounting.addReport('Something went wrong...');
 accounting.printReports();
 ```
+
+**Overriding Properties & The `protected` Modifier**
+`protected` allows access to the class member from itself and any classes that inherit it.
+```typescript
+class Department {
+  protected employees: string[] = []; // protected modifier
+  constructor(private readonly id: string, public name: string) {} //constructor
+
+  describe(this: Department) { ... }
+  addEmployes(employee: string) { ... }
+  printEmployeesInfo() { ... }
+}
+
+class AccountingDepartment extends Department {
+  private reports: string[];
+  constructor(id: string, reports: string[]) {
+    super(id, 'ACCOUNTING');
+    this.reports = reports;
+  }
+
+  addEmployes(employee: string): void {
+    if (employee === 'galbeiroc') {
+      return;
+    }
+    this.employees.push(employee); // override property
+  }
+
+  addReport(text: string) {
+    this.reports.push(text);
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accounting = new AccountingDepartment('D2', []);
+accounting.addReport('Something went wrong...');
+accounting.addEmployes('galbeiroc');
+accounting.addEmployes('jesus');
+accounting.printReports();
+accounting.printEmployeesInfo();
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

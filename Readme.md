@@ -574,6 +574,65 @@ const employee1 = Department.createEmployee('galbeiroc');
 console.log(employee1, Department.fiscalYear); // { name: 'galbeiroc' } 2022
 ```
 
+**Abstract Classes**
+Classes, methods, and fields in TypeScript may be abstract.
+An *abstract method* or *abstract field* is one that hasn’t had an implementation provided. These members must exist inside an `abstract class`, which cannot be directly instantiated.
+```typescript
+abstract class Base {
+  abstract getName(): string;
+ 
+  printName() {
+    console.log("Hello, " + this.getName());
+  }
+}
+ 
+const b = new Base(); // Cannot create an instance of an abstract class.
+```
+The role of abstract classes is to serve as a base class for subclasses which do implement all the abstract members. When a class doesn’t have any abstract members, it is said to be `concrete`. In the example based on the `Department` class, which is `abstract` class has such a `abstract` method, which means this method has to be implemented by any class based on this `Department` class.
+
+```typescript
+abstract class Department { // abstract class
+  static fiscalYear: number = 2022;
+  protected employees: string[] = [];
+
+  constructor(protected readonly id: string, public name: string) {} //constructor
+
+  static createEmployee(name: string) { // static method
+    return { name }
+  }
+
+  abstract describe(this: Department): void; // abstract method
+}
+
+class ITDepartment extends Department {
+  constructor(id: string, public admins: string[]){
+    super(id, 'IT'); // call the contructor of parent class
+  }
+
+  describe() { // describe method
+    console.log('IT Department - ID', this.id);
+  }
+}
+
+class AccountingDepartment extends Department {
+  private lastReport: string;
+  constructor(id: string, private reports: string[]) {
+    super(id, 'ACCOUNTING');
+    this.lastReport = reports[0];
+  }
+
+  describe() { // describe method
+    console.log('Accounting Department - ID', this.id);
+  }
+}
+
+const it = new ITDepartment('D1', ['guti']);
+it.describe();
+
+const accounting = new AccountingDepartment('D2', ['Something went wrong...']);
+accounting.describe();
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

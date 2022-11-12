@@ -408,6 +408,52 @@ class Department {
 }
 ```
 
+**inheritance**
+Inheritance allows us to define a class that inherits all the methods and properties from another class.
+*Parent* class is the class being inherited from, also called base class.
+*Child* class is the class that inherits from another class, also called derived class.
+```typescript
+class Department {
+  private employees: string[] = [];
+  constructor(private readonly id: string, public name: string) {} //constructor
+
+  describe(this: Department) { ... }
+  addEmployes(employee: string) { ... }
+  printEmployeesInfo() { ... }
+}
+
+class ITDepartment extends Department {
+  constructor(id: string, public admins: string[]){
+    super(id, 'IT'); // call the contructor of parent class
+  }
+}
+
+class AccountingDepartment extends Department {
+  private reports: string[];
+  constructor(id: string, reports: string[]) {
+    super(id, 'ACCOUNTING');
+    this.reports = reports;
+  }
+
+  addReport(text: string) {
+    this.reports.push(text);
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const it = new ITDepartment('D1', ['guti']);
+it.addEmployes('galbeiroc');
+it.addEmployes('crespo');
+it.describe();
+it.printEmployeesInfo();
+
+const accounting = new AccountingDepartment('D2', []);
+accounting.addReport('Something went wrong...');
+accounting.printReports();
+```
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

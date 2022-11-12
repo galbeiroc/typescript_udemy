@@ -500,7 +500,7 @@ accounting.printReports();
 accounting.printEmployeesInfo();
 ```
 
-**Getters and Settters**
+**Getters and Settters (Encapsulation)**
 Getters and setters allow you to get and set properties via methods.
 * A getter method returns the value of the property’s value. A getter is also called an accessor.
 * A setter method updates the property’s value. A setter is also known as a mutator.
@@ -524,7 +524,7 @@ class AccountingDepartment extends Department {
     if (!value) {
       throw new Error('Please pass in a valid value!')
     }
-    this.addEmployes(value);
+    this.addReport(value);
   }
 
   addEmployes(employee: string): void {

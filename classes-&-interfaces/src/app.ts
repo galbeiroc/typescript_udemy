@@ -51,7 +51,7 @@ class AccountingDepartment extends Department {
     if (!value) {
       throw new Error('Please pass in a valid value!')
     }
-    this.addEmployes(value);
+    this.addReport(value);
   }
 
   addEmployes(employee: string): void {

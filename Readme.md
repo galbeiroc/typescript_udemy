@@ -633,6 +633,47 @@ const accounting = new AccountingDepartment('D2', ['Something went wrong...']);
 accounting.describe();
 ```
 
+**Singletons & Private Constructors**
+The Singleton pattern is about ensuring that we always only have exactly one instance of a certain class. This is can be useful in scenarios where we somehow can't use static methods or properties or we don't want to. But at the same time, we want to make sure that we can't create multiples objects based on a class.
+We always have exactly one object based on a class.
+
+```typescript
+class AccountingDepartment extends Department {
+  private lastReport: string;
+  private static instance: AccountingDepartment; // static instance property
+
+  private constructor(id: string, private reports: string[]) { // private constructor
+    super(id, 'ACCOUNTING');
+    this.lastReport = reports[0];
+  }
+
+  static getInstance() { // Singleton
+    if (AccountingDepartment.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountingDepartment('D2', []);
+    return this.instance;
+  }
+
+  describe() {
+    console.log('Accounting Department - ID', this.id);
+  }
+
+  get mostRecentReport() { ... }
+
+  set mostRecentReport(value: string) { ... }
+
+  addEmployes(employee: string): void { ... }
+
+  addReport(text: string) { ... }
+
+  printReports() { ... }
+}
+
+const accounting = AccountingDepartment.getInstance();
+const accounting1 = AccountingDepartment.getInstance();
+console.log(accounting, accounting1); // They are the same object because we have one instance
+```
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

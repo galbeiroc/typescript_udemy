@@ -363,6 +363,30 @@ class Department {
 const accounting = new Department('Accounting');
 ```
 
+**Constructor Function & the `this` keyword**
+`constructor` method is a special method for creating and initializing an object created with a class. 
+`this` then typically refers back to the concrete instance of this class.
+```typescript
+class Department {
+  name: string; //property
+
+  constructor(n: string) { //constructor
+    this.name = n;
+  }
+
+  describe(this: Department) { //method
+    console.log('Department: ', this.name);
+  }
+}
+const accounting = new Department('Accounting');
+accounting.describe();
+
+const accountingCopy = { describe: accounting.describe, name: 'Tested' };
+accountingCopy.describe();
+const accountingCopy = { describe: accounting.describe };
+accountingCopy.describe(); // Error
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

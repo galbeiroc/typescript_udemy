@@ -550,6 +550,29 @@ accounting.mostRecentReport = 'Year end report';
 console.log(accounting.mostRecentReport);
 ```
 
+**Static Methods & Properties**
+The `static` keyword defines static methods for classes.
+Static methods are called directly on the class, without creating an instance/object.
+We call methods directly on the class without the `new` keyword.
+We can't access `static` properties and methods inside `constructor` method, because the whole idea behind static properties and methods is that they are detached from instances. If we want to use the static properties or methods from inside the class. We have to use the class name here to access it. Example `Department.fiscalYear`.
+
+```typescript
+class Department {
+  static fiscalYear: number = 2022; // static property
+  protected employees: string[] = [];
+
+  constructor(private readonly id: string, public name: string) { //constructor
+    console.log(Department.fiscalYear); //access to static property
+  }
+
+  static createEmployee(name: string) { // static method
+    return { name }
+  }
+}
+
+const employee1 = Department.createEmployee('galbeiroc');
+console.log(employee1, Department.fiscalYear); // { name: 'galbeiroc' } 2022
+```
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
@@ -557,5 +580,5 @@ console.log(accounting.mostRecentReport);
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###
-### 13- Webpack and TypeScript ###
+### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

@@ -500,6 +500,57 @@ accounting.printReports();
 accounting.printEmployeesInfo();
 ```
 
+**Getters and Settters**
+Getters and setters allow you to get and set properties via methods.
+* A getter method returns the value of the property’s value. A getter is also called an accessor.
+* A setter method updates the property’s value. A setter is also known as a mutator.
+
+```typescript
+class AccountingDepartment extends Department {
+  private lastReport: string;
+  constructor(id: string, private reports: string[]) {
+    super(id, 'ACCOUNTING');
+    this.lastReport = reports[0];
+  }
+
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error('Not report found.');
+  }
+
+  set mostRecentReport(value: string) {
+    if (!value) {
+      throw new Error('Please pass in a valid value!')
+    }
+    this.addEmployes(value);
+  }
+
+  addEmployes(employee: string): void {
+    if (employee === 'galbeiroc') {
+      return;
+    }
+    this.employees.push(employee); // override property
+  }
+
+  addReport(text: string) {
+    this.reports.push(text);
+    this.lastReport = text;
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accounting = new AccountingDepartment('D2', []);
+accounting.addReport('Something went wrong...');
+accounting.mostRecentReport = 'Year end report';
+console.log(accounting.mostRecentReport);
+```
+
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

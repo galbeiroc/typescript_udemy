@@ -260,13 +260,13 @@ target JavaScript version we want to compile the code. It also compiles the code
 }
 ```
 **Useful Resources & Links**
-* (tsconfig Docs: )[https://www.typescriptlang.org/docs/handbook/tsconfig-json.html]
-* (Compiler Config Docs: )[https://www.typescriptlang.org/docs/handbook/compiler-options.html]
-* (TS Debugging: )[https://code.visualstudio.com/docs/typescript/typescript-debugging]
+* [tsconfig Docs](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+* [Compiler Config Docs](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+* [TS Debugging](https://code.visualstudio.com/docs/typescript/typescript-debugging)
 
 ### 04- Working with Next-gen JS Code ###
 **let and const**
-(Next-gen JS Feature Table)[https://kangax.github.io/compat-table/es6/]
+[Next-gen JS Feature Table](https://kangax.github.io/compat-table/es6/)
 `const` are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment.
 ```typescript
 const userName = 'Albeiro';
@@ -390,7 +390,7 @@ accountingCopy.describe(); // Error
 **'private' and 'public' Access Modifiers**
 `public` (default) allows access to the class member from anywhere
 `private` only allows access to the class member from within the class.
-(JavaScript Private & Public Fields)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields]
+[JavaScript Private & Public Fields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields)
 
 *Shorthand Initialization*
 ```typescript

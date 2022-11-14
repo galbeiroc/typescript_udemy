@@ -815,6 +815,40 @@ Interfaces nonetheless are powerful feature to force your class or objects to ha
 * [More on TS Interfaces: ](https://www.typescriptlang.org/docs/handbook/2/objects.html)
 
 ### 06- Advanced Types & TypeScript Features ###
+**Intersection Types `&`**
+TypeScript provides another construct called intersection (`&`) types that is mainly used to combine existing object types. Intersection types are closely related to interface inheritance because of course we could have achieved the same here by using an interface.
+
+```typescript
+// intersection types with types alias
+type Admin = {
+  name: string;
+  privileges: string[];
+};
+
+type Employee = {
+  name: string;
+  startDate: Date;
+};
+
+type ElevetadEmployee = Admin & Employee;
+
+// similar by using interfaces
+interface Admin { ... }
+interface Employee { ... }
+interface ElevetadEmployee extends Admin, Employee{};
+
+const employee: ElevetadEmployee = {
+  name: 'galbeiroc',
+  privileges: ['create', 'update'],
+  startDate: new Date()
+}
+
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+type Universal = Combinable & Numeric;
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

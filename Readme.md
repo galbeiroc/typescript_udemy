@@ -347,6 +347,7 @@ const { firstName: userName, age } = person; // override firstName
 ```
 
 ### 05- Classes & Interfaces ###
+* Classes
 **What are Classes**
 Define how object look like, which properties and methods they have. Classes are a template for creating objects.
 
@@ -674,6 +675,28 @@ const accounting = AccountingDepartment.getInstance();
 const accounting1 = AccountingDepartment.getInstance();
 console.log(accounting, accounting1); // They are the same object because we have one instance
 ```
+
+* Interfaces
+**What are Interfaces**
+Interfaces describe the structure of an object. We can use it to describe how an object should look like.
+```typescript
+interface Person {
+  name: string;
+  age: number;
+  greet(phrase: string): void;
+}
+
+let user1: Person = {
+  name: 'galbeiroc',
+  age: 33,
+  greet(phrase: string) {
+    console.log(phrase, ' ', this.name);
+  }
+}
+
+user1.greet('Hi there - I am');
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

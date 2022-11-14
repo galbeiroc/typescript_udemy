@@ -686,7 +686,7 @@ interface Person {
   greet(phrase: string): void;
 }
 
-let user1: Person = {
+let user: Person = {
   name: 'galbeiroc',
   age: 33,
   greet(phrase: string) {
@@ -694,8 +694,43 @@ let user1: Person = {
   }
 }
 
-user1.greet('Hi there - I am');
+user.greet('Hi there - I am');
 ```
+###### Differences Between Type Aliases and Interfaces ######
+Type aliases and interfaces are very similar, and in many cases you can choose between them freely. Almost all features of an interface are available in type, the key distinction is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
+
+|                interface                   |                         type                         |
+| ------------------------------------------ | ---------------------------------------------------- |
+| Extending an interface                     | Extending a type via intersections                   |
+| `interface Bear extends Animal {}`         |  `type Bear = Animal & { }`                          |
+| Adding new fields to an existing interface | A type cannot be changed after being created         |
+
+**Using Interfaces With Classes**
+Another thing we can do with interfaces, but we would also be also to do with custom types is we can implement an interface in a class. The reason why often work with interfaces is that inteface can be used as a contract, a class can implement, and a class then has to adhere to. We can impelemt more than one interface. That's a difference compared to inheritance. We can inherit only from one class. Therefore interface are often used o share funcionality amongst different classes, not regarding their concrete implementation. We can't have implementation or values inside of interfaces, regarding the feature a class should have. It's a bit like working with `abstract` classes. Therefore the diffrence being that an `interface` has not implementation deatils at all. Whereas `abstract` class can be mixture of we have to override this part and we have a concrete implementation part. That's an important diffrence between interfaces and abstract classes.
+
+
+```typescript
+interface Greetable {
+  name: string;
+
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable { // implement interface
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  greet(phrase: string): void {
+    console.log(phrase, ' ', this.name);
+  }
+}
+
+const user = new Person('crespo');
+user.greet('Hi there - I am');
+```
+
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

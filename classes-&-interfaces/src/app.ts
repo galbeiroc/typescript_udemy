@@ -1,12 +1,25 @@
-interface Person {
+interface Greetable {
   name: string;
-  age: number;
+
   greet(phrase: string): void;
 }
 
-let user1: Person = {
+class Person implements Greetable {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  greet(phrase: string): void {
+    console.log(phrase, ' ', this.name);
+  }
+}
+
+const user = new Person('crespo');
+user.greet('Hi there - I am');
+
+let user1: Greetable = {
   name: 'galbeiroc',
-  age: 33,
   greet(phrase: string) {
     console.log(phrase, ' ', this.name);
   }

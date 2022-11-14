@@ -14,8 +14,8 @@ class Person implements Greetable {
     console.log(phrase, ' ', this.name);
   }
 }
-
-const user = new Person('crespo');
+let user: Greetable;
+user = new Person('crespo');
 user.greet('Hi there - I am');
 
 let user1: Greetable = {

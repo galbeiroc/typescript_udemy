@@ -731,6 +731,8 @@ const user = new Person('crespo');
 user.greet('Hi there - I am');
 ```
 
+**Why Interfaces?**
+Interfaces is useful in situations like this where know we want to have a certain set of functionalities.
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

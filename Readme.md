@@ -765,7 +765,7 @@ interface Greetable extends Named, AnotherInterface {
 **Interfaces as Function Types**
 Interfaces can also be used to define the structure of a function, so basically as a replacement for the function types. It is a nice alternative syntax to be aware of.
 
-``` typescript
+```typescript
 interface AddFunc {
   (a: number, b: number): number
 }
@@ -777,6 +777,38 @@ add = (n1: number, n2: number) => {
 }
 ``` 
 
+**Optional Parameters & Properties**
+We can also define optional properties in interfaces and also in class like this:
+```typescript
+interface Named {
+  readonly name?: string;
+  outputName?: string;
+}
+interface Greetable extends Named {
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable {
+  name?: string;
+  constructor(name?: string) {
+    if (name) {
+      this.name = name;
+    }
+  }
+
+  greet(phrase: string): void {
+    if (this.name) {
+      console.log(phrase, ' ', this.name);
+    } else {
+      console.log('Hi!!');
+    }
+  }
+}
+
+let user: Greetable;
+user = new Person();
+user.greet('Hi there - I am'); // Hi
+```
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

@@ -809,6 +809,10 @@ let user: Greetable;
 user = new Person();
 user.greet('Hi there - I am'); // Hi
 ```
+Interfaces nonetheless are powerful feature to force your class or objects to have a certain structure and to clearly describe our idea of how an object should look like.
+
+* [More on (JS) Classes: ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+* [More on TS Interfaces: ](https://www.typescriptlang.org/docs/handbook/2/objects.html)
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

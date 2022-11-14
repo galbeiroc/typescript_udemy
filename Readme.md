@@ -677,6 +677,7 @@ console.log(accounting, accounting1); // They are the same object because we hav
 ```
 
 * Interfaces
+
 **What are Interfaces**
 Interfaces describe the structure of an object. We can use it to describe how an object should look like.
 ```typescript
@@ -760,6 +761,22 @@ interface Greetable extends Named, AnotherInterface {
   greet(phrase: string): void;
 }
 ```
+
+**Interfaces as Function Types**
+Interfaces can also be used to define the structure of a function, so basically as a replacement for the function types. It is a nice alternative syntax to be aware of.
+
+``` typescript
+interface AddFunc {
+  (a: number, b: number): number
+}
+
+let add: AddFunc;
+
+add = (n1: number, n2: number) => {
+  return n1 + n2;
+}
+``` 
+
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

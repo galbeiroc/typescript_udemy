@@ -733,6 +733,21 @@ user.greet('Hi there - I am');
 
 **Why Interfaces?**
 Interfaces is useful in situations like this where know we want to have a certain set of functionalities.
+`readonly` makes it clear that the interface properties in whatever object we build on this interfacemust only be set once and read only thereafter.
+
+```typescript
+interface Greetable {
+  readonly name: string;
+
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable { ... }
+
+user = new Person('crespo');
+user.greet('Hi there - I am');
+user.name = 'guti'; // Cannot assign to 'name' because it is a read-only property.
+```
 
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###

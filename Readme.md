@@ -749,6 +749,18 @@ user.greet('Hi there - I am');
 user.name = 'guti'; // Cannot assign to 'name' because it is a read-only property.
 ```
 
+**Extending Interfaces**
+Extending interfaces is possible and there we can also `extends` more than one. It is totally different in class wich we can extend one class.
+``` typescript
+interface Named {
+  readonly name: string;
+}
+
+interface Greetable extends Named, AnotherInterface {
+  greet(phrase: string): void;
+}
+```
+
 ### 06- Advanced Types & TypeScript Features ###
 ### 07- Generics ###
 ### 08- Decorators ###

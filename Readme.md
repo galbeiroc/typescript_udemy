@@ -1011,6 +1011,24 @@ const result2 = add('galbeiroc', 'Crespo');
 ```
 We can be really clear about what's getting returned for the different combinations we might support in our function.
 
+**Optional Chaining**
+Optional chaining operator helps us safely access nested properties and nested objects in our object data. If the thing in front of the question mark `?` is `undefined`, it will not access the thing thereafter.
+
+```typescript
+interface UserData {
+  id: string;
+  name: string;
+  job?:  { title?: string, description?: string }
+}
+
+const fetchUserData: UserData = {
+  id: 'abc123',
+  name: 'galbeiroc',
+  // job: { title: 'CEO', description: 'My own company' }
+}
+console.log(fetchUserData?.job?.title);
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

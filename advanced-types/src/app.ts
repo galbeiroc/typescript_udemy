@@ -117,3 +117,17 @@ interface ErrorContainer { // { email: 'Not a valid email', username: 'Must star
 const errorBag: ErrorContainer = {
   email: 'Not a valid email'
 }
+
+interface UserData {
+  id: string;
+  name: string;
+  job?:  { title?: string, description?: string }
+}
+
+const fetchUserData: UserData = {
+  id: 'abc123',
+  name: 'galbeiroc',
+  // job: { title: 'CEO', description: 'My own company' }
+}
+
+console.log(fetchUserData?.job?.title);

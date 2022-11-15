@@ -1029,6 +1029,15 @@ const fetchUserData: UserData = {
 console.log(fetchUserData?.job?.title);
 ```
 
+**Nullish Coalescing**
+Nullish coalescing `??` allows us to specify a kind of a default value to be used in place of another expression, which is evaluated to null or undefined.
+
+```typescript
+const userInputVal = null;
+const storedData = userInputVal ?? 'DEFAULT';
+console.log(storedData); // 'DEFAULT'
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

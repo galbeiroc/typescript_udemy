@@ -849,6 +849,89 @@ type Numeric = number | boolean;
 type Universal = Combinable & Numeric;
 ```
 
+**More on Type Guards `&`**
+* Type Guards allow us to utilize the flexibility union types gives us and still ensure that our code runs correctly at runtime.
+* Type Guards allow us to narrow down the type of a variable within a conditional block.
+
+1. **`typeof` type guard**
+JavaScript supports a `typeof` operator which can give very basic information about the type of values we have at runtime. TypeScript expects this to return a certain set of strings:
+* `"string"`
+* `"number"`
+* `"bigint"`
+* `"boolean"`
+* `"symbol"`
+* `"undefined"`
+* `"object"`
+* `"function"`
+
+```typescript
+type Combinable = string | number;
+
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+```
+
+2. **The `in` operator**
+JavaScript has an operator for determining if an object has a property with a name: the `in` operator. TypeScript takes this into account as a way to narrow down potential types.
+
+```typescript
+type UnknownEmployee = Admin | Employee;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log('Name: ', emp.name);
+  if ('privileges' in emp) {
+    console.log('Privileges: ', emp.privileges);
+  }
+  if ('startDate' in emp) {
+    console.log('Start Date: ', emp.startDate);
+  }
+}
+printEmployeeInformation({ name: 'Max', startDate: new Date() });
+```
+
+3. **`instanceof` type guard**
+JavaScript has an operator for checking whether or not a value is an “instance” of another value.
+The instanceof keyword checks whether an object is an instance of a specific class.
+When working with classes, we can also use another type of type guard and that would be the instance.
+
+```typescript
+class Car {
+  drive() {
+    console.log('Driving...');
+  }
+}
+
+class Truck {
+  drive() {
+    console.log('Driving a truck...');
+  }
+
+  loadCargo(amount: number) {
+    console.log('Loading cargo...', amount);
+  }
+}
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2 = new Truck();
+
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  if (vehicle instanceof Truck) {
+    vehicle.loadCargo(100);
+  }
+}
+
+useVehicle(v1);
+useVehicle(v2);
+```
+Type guards is just a term that describes the idea or approach of checking if a certain property or method exists before we try to use it.
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

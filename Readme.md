@@ -964,6 +964,17 @@ function moveAnimmal(animal: Animal) {
 moveAnimmal({ type: 'bird', flyingSpeed: 10 });
 ```
 
+**Type Casting**
+Type Casting help us tell TypeScript that some value is of a specific type where TypeScript
+is not able to detect it on it own. But we as a developer know that it will be the case. Type casting is powerful feature so is this exclamation mark `!`, this exclamation mark allow us to tell TypeScript that the expression in front of it will never yield null.
+
+```typescript
+const userInputElement = <HTMLInputElement>document.getElementById('user-input')!; // option 1
+const userInputElement = document.getElementById('user-input')! as HTMLInputElement; // casting option 2
+
+userInputElement.value = 'Hi there!!';
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

@@ -932,6 +932,38 @@ useVehicle(v2);
 ```
 Type guards is just a term that describes the idea or approach of checking if a certain property or method exists before we try to use it.
 
+**Descriminated Unions**
+It's a pattern which we can use when working union types that makes implementing type gurad easier. It is available when we work with object types.
+This is a descriminated union because we have a common property in every object that makes up our union which describes that object, so that we can use this property that describes this object in our check to have 100% type safety.
+
+```typescript
+interface Bird {
+  type: 'bird'; // common property
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'horse'; // common property
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimmal(animal: Animal) {
+  let speed;
+  switch(animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    default:
+      speed = animal.runningSpeed;
+  }
+  console.log('Moving at speed: ', speed);
+}
+
+moveAnimmal({ type: 'bird', flyingSpeed: 10 });
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

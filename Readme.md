@@ -975,6 +975,21 @@ const userInputElement = document.getElementById('user-input')! as HTMLInputElem
 userInputElement.value = 'Hi there!!';
 ```
 
+**Index Properties or Index Signatures**
+Index types is a feature that allows us to create objects which are more flexible regarding the propeties they might hold.
+Sometimes we don’t know all the names of a type’s properties ahead of time, but you do know the shape of the values.
+In those cases we can use an index signature to describe the types of possible values.
+
+```typescript
+interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character' }
+  [key: string]: string
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email'
+}
+```
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

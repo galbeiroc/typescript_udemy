@@ -1038,6 +1038,8 @@ const storedData = userInputVal ?? 'DEFAULT';
 console.log(storedData); // 'DEFAULT'
 ```
 
+[More on Advanced Types: ](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

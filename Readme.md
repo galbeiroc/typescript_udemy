@@ -990,6 +990,27 @@ const errorBag: ErrorContainer = {
 }
 ```
 
+**Function Overloads**
+Function overloads is a feature thar allows us to define multiple function signatueres so to say for one at the same function, which simply means we can have multiple possible ways of calling a functionwith different parameters.
+*Note:* Do sort overloads by putting the more general signatures after more specific signatures.
+*Why*: TypeScript chooses the first matching overload when resolving function calls. When an earlier overload is “more general” than a later one, the later one is effectively hidden and cannot be called.
+
+```typescript
+// function add(a: number): number; // this it would work if 'b' is optional parameter
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+
+const result1 = add(2, 2);
+const result2 = add('galbeiroc', 'Crespo');
+```
+We can be really clear about what's getting returned for the different combinations we might support in our function.
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

@@ -815,6 +815,231 @@ Interfaces nonetheless are powerful feature to force your class or objects to ha
 * [More on TS Interfaces: ](https://www.typescriptlang.org/docs/handbook/2/objects.html)
 
 ### 06- Advanced Types & TypeScript Features ###
+**Intersection Types `&`**
+TypeScript provides another construct called intersection (`&`) types that is mainly used to combine existing object types. Intersection types are closely related to interface inheritance because of course we could have achieved the same here by using an interface.
+
+```typescript
+// intersection types with types alias
+type Admin = {
+  name: string;
+  privileges: string[];
+};
+
+type Employee = {
+  name: string;
+  startDate: Date;
+};
+
+type ElevetadEmployee = Admin & Employee;
+
+// similar by using interfaces
+interface Admin { ... }
+interface Employee { ... }
+interface ElevetadEmployee extends Admin, Employee{};
+
+const employee: ElevetadEmployee = {
+  name: 'galbeiroc',
+  privileges: ['create', 'update'],
+  startDate: new Date()
+}
+
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+type Universal = Combinable & Numeric;
+```
+
+**More on Type Guards `&`**
+* Type Guards allow us to utilize the flexibility union types gives us and still ensure that our code runs correctly at runtime.
+* Type Guards allow us to narrow down the type of a variable within a conditional block.
+
+1. **`typeof` type guard**
+JavaScript supports a `typeof` operator which can give very basic information about the type of values we have at runtime. TypeScript expects this to return a certain set of strings:
+* `"string"`
+* `"number"`
+* `"bigint"`
+* `"boolean"`
+* `"symbol"`
+* `"undefined"`
+* `"object"`
+* `"function"`
+
+```typescript
+type Combinable = string | number;
+
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+```
+
+2. **The `in` operator**
+JavaScript has an operator for determining if an object has a property with a name: the `in` operator. TypeScript takes this into account as a way to narrow down potential types.
+
+```typescript
+type UnknownEmployee = Admin | Employee;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log('Name: ', emp.name);
+  if ('privileges' in emp) {
+    console.log('Privileges: ', emp.privileges);
+  }
+  if ('startDate' in emp) {
+    console.log('Start Date: ', emp.startDate);
+  }
+}
+printEmployeeInformation({ name: 'Max', startDate: new Date() });
+```
+
+3. **`instanceof` type guard**
+JavaScript has an operator for checking whether or not a value is an “instance” of another value.
+The instanceof keyword checks whether an object is an instance of a specific class.
+When working with classes, we can also use another type of type guard and that would be the instance.
+
+```typescript
+class Car {
+  drive() {
+    console.log('Driving...');
+  }
+}
+
+class Truck {
+  drive() {
+    console.log('Driving a truck...');
+  }
+
+  loadCargo(amount: number) {
+    console.log('Loading cargo...', amount);
+  }
+}
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2 = new Truck();
+
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  if (vehicle instanceof Truck) {
+    vehicle.loadCargo(100);
+  }
+}
+
+useVehicle(v1);
+useVehicle(v2);
+```
+Type guards is just a term that describes the idea or approach of checking if a certain property or method exists before we try to use it.
+
+**Descriminated Unions**
+It's a pattern which we can use when working union types that makes implementing type gurad easier. It is available when we work with object types.
+This is a descriminated union because we have a common property in every object that makes up our union which describes that object, so that we can use this property that describes this object in our check to have 100% type safety.
+
+```typescript
+interface Bird {
+  type: 'bird'; // common property
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'horse'; // common property
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimmal(animal: Animal) {
+  let speed;
+  switch(animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    default:
+      speed = animal.runningSpeed;
+  }
+  console.log('Moving at speed: ', speed);
+}
+
+moveAnimmal({ type: 'bird', flyingSpeed: 10 });
+```
+
+**Type Casting**
+Type Casting help us tell TypeScript that some value is of a specific type where TypeScript
+is not able to detect it on it own. But we as a developer know that it will be the case. Type casting is powerful feature so is this exclamation mark `!`, this exclamation mark allow us to tell TypeScript that the expression in front of it will never yield null.
+
+```typescript
+const userInputElement = <HTMLInputElement>document.getElementById('user-input')!; // option 1
+const userInputElement = document.getElementById('user-input')! as HTMLInputElement; // casting option 2
+
+userInputElement.value = 'Hi there!!';
+```
+
+**Index Properties or Index Signatures**
+Index types is a feature that allows us to create objects which are more flexible regarding the propeties they might hold.
+Sometimes we don’t know all the names of a type’s properties ahead of time, but you do know the shape of the values.
+In those cases we can use an index signature to describe the types of possible values.
+
+```typescript
+interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character' }
+  [key: string]: string
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email'
+}
+```
+
+**Function Overloads**
+Function overloads is a feature thar allows us to define multiple function signatueres so to say for one at the same function, which simply means we can have multiple possible ways of calling a functionwith different parameters.
+*Note:* Do sort overloads by putting the more general signatures after more specific signatures.
+*Why*: TypeScript chooses the first matching overload when resolving function calls. When an earlier overload is “more general” than a later one, the later one is effectively hidden and cannot be called.
+
+```typescript
+// function add(a: number): number; // this it would work if 'b' is optional parameter
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+
+const result1 = add(2, 2);
+const result2 = add('galbeiroc', 'Crespo');
+```
+We can be really clear about what's getting returned for the different combinations we might support in our function.
+
+**Optional Chaining**
+Optional chaining operator helps us safely access nested properties and nested objects in our object data. If the thing in front of the question mark `?` is `undefined`, it will not access the thing thereafter.
+
+```typescript
+interface UserData {
+  id: string;
+  name: string;
+  job?:  { title?: string, description?: string }
+}
+
+const fetchUserData: UserData = {
+  id: 'abc123',
+  name: 'galbeiroc',
+  // job: { title: 'CEO', description: 'My own company' }
+}
+console.log(fetchUserData?.job?.title);
+```
+
+**Nullish Coalescing**
+Nullish coalescing `??` allows us to specify a kind of a default value to be used in place of another expression, which is evaluated to null or undefined.
+
+```typescript
+const userInputVal = null;
+const storedData = userInputVal ?? 'DEFAULT';
+console.log(storedData); // 'DEFAULT'
+```
+
+[More on Advanced Types: ](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
+
 ### 07- Generics ###
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

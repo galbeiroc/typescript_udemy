@@ -1041,6 +1041,11 @@ console.log(storedData); // 'DEFAULT'
 [More on Advanced Types: ](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
 
 ### 07- Generics ###
+Generics allow creating 'type variables' which can be used to create classes, functions & type aliases that don't need to explicitly define the types that they use.
+Generics makes it easier to write reusable code.
+A generic type is a type which is kind of connected with some other type and is really flexible regarding which exact type that our type is.
+
+
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

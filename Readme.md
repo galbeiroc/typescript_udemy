@@ -1045,6 +1045,15 @@ Generics allow creating 'type variables' which can be used to create classes, fu
 Generics makes it easier to write reusable code.
 A generic type is a type which is kind of connected with some other type and is really flexible regarding which exact type that our type is.
 
+```typescript
+function merge<T, U>(target: T, source: U) {
+ return Object.assign({}, target, source);
+}
+
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30 });
+mergeObj.username;
+```
+In this example is important to understand that this is in the end what generics are all about, that we can fill in different concrete types for different functions calls. We don't need to care about because TypeScript simply infers the types of the values we're passing. Then it plugs in the inferred types for `T` and `U`. for this function call.
 
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

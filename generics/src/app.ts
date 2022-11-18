@@ -8,10 +8,21 @@
 
 // promise.then((result) => result.toLowerCase());
 
-function merge<T, U>(target: T, source: U) {
+function merge<T extends object, U extends object>(target: T, source: U) {
  return Object.assign({}, target, source);
 }
 
 console.log(merge({ name: 'galbeiro', hobbies: ['sports'] }, { age: 30 }));
-const mergeObj = merge({ username: 'galbeiroc' }, { age: 30 });
-mergeObj.username;
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30 });
+mergeObj.age;
+
+interface Lengthwise {
+  length: number;
+}
+ 
+function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+  console.log(arg.length); // Now we know it has a .length property, so no more error
+  return arg;
+}
+
+console.log(loggingIdentity({ length: 10, value: 3 }));

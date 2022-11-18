@@ -1054,6 +1054,34 @@ const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30
 mergeObj.username;
 ```
 In this example is important to understand that this is in the end what generics are all about, that we can fill in different concrete types for different functions calls. We don't need to care about because TypeScript simply infers the types of the values we're passing. Then it plugs in the inferred types for `T` and `U`. for this function call.
+Therefore, generics allow us to continue working with our data in a TypeScript optimal way.
+
+**Constraints**
+For generics types, we can set certain constraints regarding the types our generics types can be based on we can do this with the extended keyword.The `extends` keyword to denote our constraint. If we want to restrict the types in our case `T` and `U` here solve our generic types.
+
+```typescript
+function merge<T extends object, U extends object>(target: T, source: U) {
+ return Object.assign({}, target, source);
+}
+
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, 30); // Error
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30 });
+mergeObj.age;
+```
+This constraints can be anything, we can extend objects, strings, numbers, we can use own type if we had it or we can also use union type there if we want to.
+
+```typescript
+interface Lengthwise {
+  length: number;
+}
+ 
+function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+  console.log(arg.length);
+  return arg;
+}
+
+console.log(loggingIdentity({ length: 10, value: 3 })); // { length: 10, value: 3 }
+```
 
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###

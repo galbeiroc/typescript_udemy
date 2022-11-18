@@ -26,3 +26,17 @@ function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
 }
 
 console.log(loggingIdentity({ length: 10, value: 3 }));
+
+function countAndDescribe<T extends Lengthwise>(element: T): [T, string] {
+  let descriptionText = 'Got no value';
+
+  if (element.length === 1) {
+    descriptionText = 'Got 1 element';
+  } else {
+    descriptionText =`Got ${element.length} elements`;
+  }
+  return [element, descriptionText];
+}
+
+console.log(countAndDescribe('Hi there!!'));
+console.log(countAndDescribe(['Sports', 'Jogging']));

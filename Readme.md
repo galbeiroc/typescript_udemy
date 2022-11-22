@@ -1097,6 +1097,21 @@ console.log(countAndDescribe('Hi there!!')); // ['Hi there!!', 'Got 10 elements'
 console.log(countAndDescribe(['Sports', 'Jogging'])); // [['Sports', 'Jogging'], 'Got 10 elements']
 ```
 
+**The `keyof` Constraint**
+The `keyof` operator takes an object type and produces a string or numeric literal union of its keys.
+
+```typescript
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return 'Value: ' + obj[key];
+}
+
+extractAndConvert({ name: 'galbeiroc'}, 'name');
+extractAndConvert({ name: 'galbeiroc'}, 'age'); // Error
+```
+* `keyof T` returns a union of string literal types. The extends keyword is used to apply constraints to `U`, so that `U` is one of the string literal types only
+* `extends` means “is assignable” instead of “inherits”; `U extends keyof T` means that any value of type `U` can be assigned to the string literal union types
+* The indexed access operator `obj[key]` returns the same type that the property has.
+
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

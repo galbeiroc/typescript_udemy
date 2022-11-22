@@ -40,3 +40,17 @@ function countAndDescribe<T extends Lengthwise>(element: T): [T, string] {
 
 console.log(countAndDescribe('Hi there!!'));
 console.log(countAndDescribe(['Sports', 'Jogging']));
+
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return 'Value: ' + obj[key];
+}
+
+extractAndConvert({ name: 'galbeiroc'}, 'name');
+console.log(extractAndConvert({ name: 'galbeiroc'}, 'name'));
+
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+};
+
+getProperty({ name: 'galbeiroc' }, 'name');
+console.log(getProperty({ name: 'galbeiroc' }, 'name'));

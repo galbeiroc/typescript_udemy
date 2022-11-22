@@ -1112,6 +1112,35 @@ extractAndConvert({ name: 'galbeiroc'}, 'age'); // Error
 * `extends` means “is assignable” instead of “inherits”; `U extends keyof T` means that any value of type `U` can be assigned to the string literal union types
 * The indexed access operator `obj[key]` returns the same type that the property has.
 
+**Generic Classes**
+A generic class has a similar shape to a generic interface. Generic classes have a generic type parameter list in angle brackets (`<>`) following the name of the class.
+
+```typescript
+class DataStorage<T extends string | number> {
+  private data: T[] = [];
+
+  additem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data]
+  }
+}
+
+const texStorage = new DataStorage<string>();
+texStorage.additem('galbeiroc');
+texStorage.additem('crespo');
+// texStorage.additem(6) Error
+texStorage.removeItem('crespo')
+console.log(texStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+```
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

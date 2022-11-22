@@ -54,3 +54,28 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
 
 getProperty({ name: 'galbeiroc' }, 'name');
 console.log(getProperty({ name: 'galbeiroc' }, 'name'));
+
+class DataStorage<T extends string | number> {
+  private data: T[] = [];
+
+  additem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data]
+  }
+}
+
+const texStorage = new DataStorage<string>();
+texStorage.additem('galbeiroc');
+texStorage.additem('crespo');
+// texStorage.additem(6);
+texStorage.removeItem('crespo')
+console.log(texStorage.getItems());
+
+const numberStorage = new DataStorage<number>();

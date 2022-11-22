@@ -75,7 +75,90 @@ const texStorage = new DataStorage<string>();
 texStorage.additem('galbeiroc');
 texStorage.additem('crespo');
 // texStorage.additem(6);
-texStorage.removeItem('crespo')
+texStorage.removeItem('crespo');
 console.log(texStorage.getItems());
 
 const numberStorage = new DataStorage<number>();
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+
+function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+
+  return courseGoal as CourseGoal;
+}
+
+const names: Readonly<string[]> = ['galbeiroc', 'crespo'];
+// names.push('guti'); Property 'push' does not exist on type 'readonly string[]
+// names.pop(); Property 'pop' does not exist on type 'readonly string[]'
+
+interface Props {
+  a?: number;
+  b?: string;
+}
+ 
+const obj: Props = { a: 5 };
+ //  const obj2: Required<Props> = { a: 5 }; Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'
+
+interface DogInfo {
+  age: number;
+  breed: string;
+}
+
+type DogName = 'fitu' | 'brilo' | 'roky';
+
+const dogs: Record<DogName, DogInfo> = {
+  fitu: { age: 9, breed: 'Pequins'},
+  brilo: { age: 2, breed: 'Creole' },
+  roky: { age: 4, breed: 'doberman' }
+}
+
+console.log(dogs.brilo);
+
+interface UserInfo {
+  name: string;
+  age: number;
+  email: string;
+}
+
+type UserInfoPreview = Pick<UserInfo, "name" | "email">
+
+const userInfo: UserInfoPreview = {
+  name: 'galbeiroc',
+  email: 'useremail@mail.com'
+  // age: 30 - Type '{ name: string; email: string; age: number; }' is not assignable to type 'UserInfoPreview'
+}
+
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: number;
+}
+ 
+type TodoPreview = Omit<Todo, "description">;
+ 
+const todo: TodoPreview = {
+  title: "Fix code",
+  completed: false,
+  createdAt: 1615544252770,
+  // description: 'tested' Type '{ title: string; completed: false; createdAt: number; description: string; }' is not assignable to type 'TodoPreview'
+};
+
+type TodoInfo = Omit<Todo, "completed" | "createdAt">;
+ 
+const todoInfo: TodoInfo = {
+  title: "Pick up kids",
+  description: 'description test'
+};
+
+type T0 = NonNullable<string | number | undefined>; // type T0 = string | number
+type T1 = NonNullable<string[] | null | undefined>; // type T1 = string[]

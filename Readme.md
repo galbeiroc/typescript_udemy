@@ -1136,11 +1136,139 @@ const texStorage = new DataStorage<string>();
 texStorage.additem('galbeiroc');
 texStorage.additem('crespo');
 // texStorage.additem(6) Error
-texStorage.removeItem('crespo')
+texStorage.removeItem('crespo');
 console.log(texStorage.getItems());
 
 const numberStorage = new DataStorage<number>();
 ```
+
+**Generics Utility Types**
+TypeScript provides several utility types to facilitate common type transformations. These utilities are available globally. They can give us extra type safety or extra fexibility:
+
+* `Partial<'Type'>`
+Constructs a type with all properties of Type set to optional. This utility will return a type that represents all subsets of a given type.
+
+```typescript
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+
+function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+
+  return courseGoal as CourseGoal;
+}
+```
+* `Required<'Type'>`
+Constructs a type consisting of all properties of 'Type' set to required. The opposite of Partial.
+
+
+```typescript
+interface Props {
+  a?: number;
+  b?: string;
+}
+ 
+const obj: Props = { a: 5 };
+ //  const obj2: Required<Props> = { a: 5 }; Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'
+```
+
+* `Readonly<'Type'>`
+Constructs a type with all properties of 'Type' set to `readonly`, meaning the properties of the constructed type cannot be reassigned.
+
+```typescript
+const names: Readonly<string[]> = ['galbeiroc', 'crespo'];
+// names.push('guti'); Property 'push' does not exist on type 'readonly string[]
+// names.pop(); Property 'pop' does not exist on type 'readonly string[]'
+```
+
+* `Record<'Keys', 'Type'>`
+Constructs an object type whose property keys are 'Keys' and whose property values are 'Type'. This utility can be used to map the properties of a type to another type.
+
+
+```typescript
+interface DogInfo {
+  age: number;
+  breed: string;
+}
+
+type DogName = 'fitu' | 'brilo' | 'roky';
+
+const dogs: Record<DogName, DogInfo> = {
+  fitu: { age: 9, breed: 'Pequins'},
+  brilo: { age: 2, breed: 'Creole' },
+  roky: { age: 4, breed: 'doberman' }
+}
+```
+
+* `Pick<'Type', 'Keys'>`
+Constructs a type by picking the set of properties 'Keys' (string literal or union of string literals) from 'Type'.
+
+```typescript
+interface UserInfo {
+  name: string;
+  age: number;
+  email: string;
+}
+
+type UserInfoPreview = Pick<UserInfo, "name" | "email">
+
+const userInfo: UserInfoPreview = {
+  name: 'galbeiroc',
+  email: 'useremail@mail.com'
+  // age: 30 - Type '{ name: string; email: string; age: number; }' is not assignable to type 'UserInfoPreview'
+}
+```
+
+* `Omit<'Type', 'Keys'>`
+Constructs a type by picking all properties from 'Type' and then removing 'Keys' (string literal or union of string literals).
+
+```typescript
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: number;
+}
+ 
+type TodoPreview = Omit<Todo, "description">;
+ 
+const todo: TodoPreview = {
+  title: "Fix code",
+  completed: false,
+  createdAt: 1615544252770,
+};
+
+const todo1: TodoPreview = {
+  title: "Fix code",
+  completed: false,
+  createdAt: 1615544252770,
+  // description: 'tested' Type '{ title: string; completed: false; createdAt: number; description: string; }' is not assignable to type 'TodoPreview'
+};
+
+type TodoInfo = Omit<Todo, "completed" | "createdAt">;
+ 
+const todoInfo: TodoInfo = { // Property 'description' is missing in type '{ title: string; }' but required in type 'TodoInfo'.
+  title: "Pick up kids",
+};
+```
+
+* `NonNullable<'Type'>`
+Constructs a type by excluding null and undefined from Type.
+
+```typescript
+type T0 = NonNullable<string | number | undefined>; // type T0 = string | number
+type T1 = NonNullable<string[] | null | undefined>; // type T1 = string[]
+```
+
+[More Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

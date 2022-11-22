@@ -1041,6 +1041,234 @@ console.log(storedData); // 'DEFAULT'
 [More on Advanced Types: ](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
 
 ### 07- Generics ###
+Generics allow creating 'type variables' which can be used to create classes, functions & type aliases that don't need to explicitly define the types that they use.
+Generics makes it easier to write reusable code.
+A generic type is a type which is kind of connected with some other type and is really flexible regarding which exact type that our type is.
+
+```typescript
+function merge<T, U>(target: T, source: U) {
+ return Object.assign({}, target, source);
+}
+
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30 });
+mergeObj.username;
+```
+In this example is important to understand that this is in the end what generics are all about, that we can fill in different concrete types for different functions calls. We don't need to care about because TypeScript simply infers the types of the values we're passing. Then it plugs in the inferred types for `T` and `U`. for this function call.
+Therefore, generics allow us to continue working with our data in a TypeScript optimal way.
+
+**Constraints**
+For generics types, we can set certain constraints regarding the types our generics types can be based on we can do this with the extended keyword.The `extends` keyword to denote our constraint. If we want to restrict the types in our case `T` and `U` here solve our generic types.
+
+```typescript
+function merge<T extends object, U extends object>(target: T, source: U) {
+ return Object.assign({}, target, source);
+}
+
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, 30); // Error
+const mergeObj = merge({ username: 'galbeiroc', hobbies: ['sports'] }, { age: 30 });
+mergeObj.age;
+```
+This constraints can be anything, we can extend objects, strings, numbers, we can use own type if we had it or we can also use union type there if we want to.
+
+```typescript
+interface Lengthwise {
+  length: number;
+}
+ 
+function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+  console.log(arg.length);
+  return arg;
+}
+
+console.log(loggingIdentity({ length: 10, value: 3 })); // { length: 10, value: 3 }
+// add another generic function
+function countAndDescribe<T extends Lengthwise>(element: T): [T, string] {
+  let descriptionText = 'Got no value';
+
+  if (element.length === 1) {
+    descriptionText = 'Got 1 element';
+  } else {
+    descriptionText =`Got ${element.length} elements`;
+  }
+  return [element, descriptionText];
+}
+
+console.log(countAndDescribe('Hi there!!')); // ['Hi there!!', 'Got 10 elements']
+console.log(countAndDescribe(['Sports', 'Jogging'])); // [['Sports', 'Jogging'], 'Got 10 elements']
+```
+
+**The `keyof` Constraint**
+The `keyof` operator takes an object type and produces a string or numeric literal union of its keys.
+
+```typescript
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return 'Value: ' + obj[key];
+}
+
+extractAndConvert({ name: 'galbeiroc'}, 'name');
+extractAndConvert({ name: 'galbeiroc'}, 'age'); // Error
+```
+* `keyof T` returns a union of string literal types. The extends keyword is used to apply constraints to `U`, so that `U` is one of the string literal types only
+* `extends` means “is assignable” instead of “inherits”; `U extends keyof T` means that any value of type `U` can be assigned to the string literal union types
+* The indexed access operator `obj[key]` returns the same type that the property has.
+
+**Generic Classes**
+A generic class has a similar shape to a generic interface. Generic classes have a generic type parameter list in angle brackets (`<>`) following the name of the class.
+
+```typescript
+class DataStorage<T extends string | number> {
+  private data: T[] = [];
+
+  additem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data]
+  }
+}
+
+const texStorage = new DataStorage<string>();
+texStorage.additem('galbeiroc');
+texStorage.additem('crespo');
+// texStorage.additem(6) Error
+texStorage.removeItem('crespo');
+console.log(texStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+```
+
+**Generics Utility Types**
+TypeScript provides several utility types to facilitate common type transformations. These utilities are available globally. They can give us extra type safety or extra fexibility:
+
+* `Partial<'Type'>`
+Constructs a type with all properties of Type set to optional. This utility will return a type that represents all subsets of a given type.
+
+```typescript
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+
+function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+
+  return courseGoal as CourseGoal;
+}
+```
+* `Required<'Type'>`
+Constructs a type consisting of all properties of 'Type' set to required. The opposite of Partial.
+
+
+```typescript
+interface Props {
+  a?: number;
+  b?: string;
+}
+ 
+const obj: Props = { a: 5 };
+ //  const obj2: Required<Props> = { a: 5 }; Property 'b' is missing in type '{ a: number; }' but required in type 'Required<Props>'
+```
+
+* `Readonly<'Type'>`
+Constructs a type with all properties of 'Type' set to `readonly`, meaning the properties of the constructed type cannot be reassigned.
+
+```typescript
+const names: Readonly<string[]> = ['galbeiroc', 'crespo'];
+// names.push('guti'); Property 'push' does not exist on type 'readonly string[]
+// names.pop(); Property 'pop' does not exist on type 'readonly string[]'
+```
+
+* `Record<'Keys', 'Type'>`
+Constructs an object type whose property keys are 'Keys' and whose property values are 'Type'. This utility can be used to map the properties of a type to another type.
+
+
+```typescript
+interface DogInfo {
+  age: number;
+  breed: string;
+}
+
+type DogName = 'fitu' | 'brilo' | 'roky';
+
+const dogs: Record<DogName, DogInfo> = {
+  fitu: { age: 9, breed: 'Pequins'},
+  brilo: { age: 2, breed: 'Creole' },
+  roky: { age: 4, breed: 'doberman' }
+}
+```
+
+* `Pick<'Type', 'Keys'>`
+Constructs a type by picking the set of properties 'Keys' (string literal or union of string literals) from 'Type'.
+
+```typescript
+interface UserInfo {
+  name: string;
+  age: number;
+  email: string;
+}
+
+type UserInfoPreview = Pick<UserInfo, "name" | "email">
+
+const userInfo: UserInfoPreview = {
+  name: 'galbeiroc',
+  email: 'useremail@mail.com'
+  // age: 30 - Type '{ name: string; email: string; age: number; }' is not assignable to type 'UserInfoPreview'
+}
+```
+
+* `Omit<'Type', 'Keys'>`
+Constructs a type by picking all properties from 'Type' and then removing 'Keys' (string literal or union of string literals).
+
+```typescript
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+  createdAt: number;
+}
+ 
+type TodoPreview = Omit<Todo, "description">;
+ 
+const todo: TodoPreview = {
+  title: "Fix code",
+  completed: false,
+  createdAt: 1615544252770,
+};
+
+const todo1: TodoPreview = {
+  title: "Fix code",
+  completed: false,
+  createdAt: 1615544252770,
+  // description: 'tested' Type '{ title: string; completed: false; createdAt: number; description: string; }' is not assignable to type 'TodoPreview'
+};
+
+type TodoInfo = Omit<Todo, "completed" | "createdAt">;
+ 
+const todoInfo: TodoInfo = { // Property 'description' is missing in type '{ title: string; }' but required in type 'TodoInfo'.
+  title: "Pick up kids",
+};
+```
+
+* `NonNullable<'Type'>`
+Constructs a type by excluding null and undefined from Type.
+
+```typescript
+type T0 = NonNullable<string | number | undefined>; // type T0 = string | number
+type T1 = NonNullable<string[] | null | undefined>; // type T1 = string[]
+```
+
+[More Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
 ### 08- Decorators ###
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

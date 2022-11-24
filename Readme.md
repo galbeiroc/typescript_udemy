@@ -1270,6 +1270,35 @@ type T1 = NonNullable<string[] | null | undefined>; // type T1 = string[]
 [More Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 ### 08- Decorators ###
+We need to check the following in tsconfig.json to work with decorator.
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "experimentalDecorators": true
+  }
+}
+```
+* Decorators provide a way to add both annotations and a meta-programming syntax for class declarations and members.
+* Decorators execute when the class is defined. Not when it is instantiated. We dont need to instantiate our class at all. So decorator runs when JavaScript finds our class defintion, our constructor definition.
+* Decorator is a special kind of declaration that can be attached to a class declaration, `method`, `accessor`, `property`, or `parameter`. Decorators use the form `@expression`, where expression must evaluate to a function that will be called at runtime with information about the decorated declaration.
+
+```typescript
+function Logger(constructor: Function) {
+  console.log('Logging..');
+  console.log(constructor);
+}
+
+@Logger
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###

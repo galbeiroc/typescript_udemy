@@ -1289,7 +1289,7 @@ function Logger(constructor: Function) {
   console.log(constructor);
 }
 
-@Logger
+@Logger // decorator
 class Person {
   name = 'galbeiroc';
 
@@ -1298,6 +1298,30 @@ class Person {
   }
 }
 ```
+
+**Decorators Factories**
+Decorator factory basically returns a decorator function, but allows us to configure it when we assign it as a decorator to something.
+```typescript
+function Logger(logString: string) {
+  // this is the decorator factory, it sets up the returned decorator function
+  return function(constructor: Function) {
+    // this is the decorator
+    console.log(logString);
+    console.log(constructor);
+  }
+}
+
+@Logger('Logging person...') // call decorator
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+We can customize the values the decorator functio uses when it executes with our factory function. Using decorator factories can give us more power and more posibilities of configuring what decorator then does internally.
+
 
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

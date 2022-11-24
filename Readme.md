@@ -1322,6 +1322,29 @@ class Person {
 ```
 We can customize the values the decorator functio uses when it executes with our factory function. Using decorator factories can give us more power and more posibilities of configuring what decorator then does internally.
 
+```typescript
+function WithTemplate(template: string, hookId: string) {
+  return function(constructor: any) {
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name; // render name property 
+    }
+  }
+}
+
+// @Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
 
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

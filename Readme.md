@@ -1345,6 +1345,41 @@ class Person {
 }
 ```
 
+Another important thing we should know, we can add more than decorator to a class or anywhere else where we can use a decorator. Execution decorator run bottom up.
+
+```typescript
+function Logger(logString: string) {
+  console.log('LOGGER DECORATOR..');
+  return function(constructor: Function) {
+    console.log(logString);
+    console.log(constructor);
+  }
+}
+
+function WithTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE FACTORY..');
+  return function(constructor: any) {
+    console.log('Rendering template..');
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name;
+    }
+  }
+}
+
+@Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
 
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

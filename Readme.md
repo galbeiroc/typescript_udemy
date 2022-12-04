@@ -1380,6 +1380,38 @@ class Person {
 }
 ```
 
+**Diving into Property Decorators**
+We can add decorator as a property `@Log`, if we add a decorator to a property the decorator receives two arguments the first argument is `target` property, target would refer to the constructor function state, prototype, instance accessor or static. The second property we get, is the property name simply. It executes basically whe our class definition is registerd by JavaScript. So it executes when we define this property  basically to JavaScript as part our class here, as part of this constructor function which is created here in the end, this is when this property decorator executes.
+
+```typescript
+function Log(target: any, propertyName: string | Symbol) {
+  console.log('Property decorator!');
+  console.log(target, propertyName);
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error('Invalid price - should be positive');
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithPrice(tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
 
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

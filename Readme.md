@@ -1471,6 +1471,12 @@ class Product {
   }
 }
 ```
+It's important to understand that first of all they are running without us instantiating this product.
+```typescript
+const p1 = new Product('Book TS', 25);
+const p2 = new Product('Book JS', 20);
+```
+So it's not instantiation of this class that matters, all this decorators no matter if it was a property, accessor, method or parameter decorartor, they all executed whe we defined this class. It's important to undrstant these are not decorator that run at runtime, when we call them method or when we work with a property this is not what they do. Instead these decorators allow us to do additional behind scenes set up work when a class is defined, back to that metaprogramming concept. We can use the decorator to do some behind the scenes work to then set up some code that should run whetever this is called, to add extra metadata or store some data about a propety somewhere else in our project or library.
 
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###

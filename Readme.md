@@ -1478,6 +1478,38 @@ const p2 = new Product('Book JS', 20);
 ```
 So it's not instantiation of this class that matters, all this decorators no matter if it was a property, accessor, method or parameter decorartor, they all executed whe we defined this class. It's important to undrstant these are not decorator that run at runtime, when we call them method or when we work with a property this is not what they do. Instead these decorators allow us to do additional behind scenes set up work when a class is defined, back to that metaprogramming concept. We can use the decorator to do some behind the scenes work to then set up some code that should run whetever this is called, to add extra metadata or store some data about a propety somewhere else in our project or library.
 
+We can replace our original constructor function of a class, we can take advantage the feature that decorator offer us that we can return new value or a new constructor function.
+
+```typescript
+function WithTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE FACTORY..');
+  return function<T extends {new(...args: any []): { name: string }}>(originalConstructor: T) {
+    return class extends originalConstructor {
+      constructor(..._: any []) {
+        super();
+        console.log('Rendering template..');
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector('h1')!.textContent = this.name;
+        }
+      }
+    }
+  }
+}
+
+@Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+const person = new Person();
+```
+
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###

@@ -1386,7 +1386,7 @@ We can add decorator as a property `@Log`, if we add a decorator to a property t
 ```typescript
 function Log(target: any, propertyName: string | Symbol) {
   console.log('Property decorator!');
-  console.log(target, propertyName);
+  console.log(target, propertyName); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
 }
 
 class Product {
@@ -1407,7 +1407,66 @@ class Product {
     this._price = p;
   }
 
-  getPriceWithPrice(tax: number) {
+  getPriceWithTax(tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
+
+**Accessor & Parameters Decorators**
+We can also add decorators to accessors they receives three arguments `target` of the contructor, the `name` of the accessor and `descriptor` will be of the type property descriptor.
+Besides properties and accessors, we also got methods and we can add decorators to methods. A method decorator also receives three arguments, the `target` again which if it's an instance method, is the property of the object, then `name` of the method and the `descriptor`.
+We can add decorator to every parameter we get of course. Parameter decorator has three parameters `target`, `name` of the method in which we used this parameter and the last parameter is the position, start index 0.
+
+
+```typescript
+function Log(target: any, propertyName: string | Symbol) {
+  console.log('Property decorator!');
+  console.log(target, propertyName); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+}
+
+function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+  console.log('Accessor Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // price
+  console.log(descriptor); // { configurable: true, enumerable: false, get: undefined, set: ƒ price(val) }
+}
+
+function Log3(target: any, name: string | Symbol, descriptor: PropertyDescriptor) {
+  console.log('Method Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // getPriceWithTax
+  console.log(descriptor); // { writable: true, configurable: true, enumerable: false, value: ƒ getPriceWithTax(tax)}
+}
+
+function Log4(target: any, name: string | Symbol, position: number) {
+  console.log('Parameter Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // getPriceWithTax
+  console.log(position); // 0
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  @Log2
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error('Invalid price - should be positive');
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  @Log3
+  getPriceWithTax(@Log4 tax: number) {
     return this._price * (1 + tax);
   }
 }

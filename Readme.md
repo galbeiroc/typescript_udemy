@@ -1270,6 +1270,351 @@ type T1 = NonNullable<string[] | null | undefined>; // type T1 = string[]
 [More Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 ### 08- Decorators ###
+We need to check the following in tsconfig.json to work with decorator.
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "experimentalDecorators": true
+  }
+}
+```
+* Decorators provide a way to add both annotations and a meta-programming syntax for class declarations and members.
+* Decorators execute when the class is defined. Not when it is instantiated. We dont need to instantiate our class at all. So decorator runs when JavaScript finds our class defintion, our constructor definition.
+* Decorator is a special kind of declaration that can be attached to a class declaration, `method`, `accessor`, `property`, or `parameter`. Decorators use the form `@expression`, where expression must evaluate to a function that will be called at runtime with information about the decorated declaration.
+
+```typescript
+function Logger(constructor: Function) {
+  console.log('Logging..');
+  console.log(constructor);
+}
+
+@Logger // decorator
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
+**Decorators Factories**
+Decorator factory basically returns a decorator function, but allows us to configure it when we assign it as a decorator to something.
+```typescript
+function Logger(logString: string) {
+  // this is the decorator factory, it sets up the returned decorator function
+  return function(constructor: Function) {
+    // this is the decorator
+    console.log(logString);
+    console.log(constructor);
+  }
+}
+
+@Logger('Logging person...') // call decorator
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+We can customize the values the decorator functio uses when it executes with our factory function. Using decorator factories can give us more power and more posibilities of configuring what decorator then does internally.
+
+```typescript
+function WithTemplate(template: string, hookId: string) {
+  return function(constructor: any) {
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name; // render name property 
+    }
+  }
+}
+
+// @Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
+Another important thing we should know, we can add more than decorator to a class or anywhere else where we can use a decorator. Execution decorator run bottom up.
+
+```typescript
+function Logger(logString: string) {
+  console.log('LOGGER DECORATOR..');
+  return function(constructor: Function) {
+    console.log(logString);
+    console.log(constructor);
+  }
+}
+
+function WithTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE FACTORY..');
+  return function(constructor: any) {
+    console.log('Rendering template..');
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name;
+    }
+  }
+}
+
+@Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+```
+
+**Diving into Property Decorators**
+We can add decorator as a property `@Log`, if we add a decorator to a property the decorator receives two arguments the first argument is `target` property, target would refer to the constructor function state, prototype, instance accessor or static. The second property we get, is the property name simply. It executes basically whe our class definition is registerd by JavaScript. So it executes when we define this property  basically to JavaScript as part our class here, as part of this constructor function which is created here in the end, this is when this property decorator executes.
+
+```typescript
+function Log(target: any, propertyName: string | Symbol) {
+  console.log('Property decorator!');
+  console.log(target, propertyName); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error('Invalid price - should be positive');
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithTax(tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
+
+**Accessor & Parameters Decorators**
+We can also add decorators to accessors they receives three arguments `target` of the contructor, the `name` of the accessor and `descriptor` will be of the type property descriptor.
+Besides properties and accessors, we also got methods and we can add decorators to methods. A method decorator also receives three arguments, the `target` again which if it's an instance method, is the property of the object, then `name` of the method and the `descriptor`.
+We can add decorator to every parameter we get of course. Parameter decorator has three parameters `target`, `name` of the method in which we used this parameter and the last parameter is the position, start index 0.
+
+
+```typescript
+function Log(target: any, propertyName: string | Symbol) {
+  console.log('Property decorator!');
+  console.log(target, propertyName); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+}
+
+function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+  console.log('Accessor Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // price
+  console.log(descriptor); // { configurable: true, enumerable: false, get: undefined, set: ƒ price(val) }
+}
+
+function Log3(target: any, name: string | Symbol, descriptor: PropertyDescriptor) {
+  console.log('Method Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // getPriceWithTax
+  console.log(descriptor); // { writable: true, configurable: true, enumerable: false, value: ƒ getPriceWithTax(tax)}
+}
+
+function Log4(target: any, name: string | Symbol, position: number) {
+  console.log('Parameter Decorator!');
+  console.log(target); // { constructor: ƒ, getPriceWithTax: ƒ } 'title'
+  console.log(name); // getPriceWithTax
+  console.log(position); // 0
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  @Log2
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error('Invalid price - should be positive');
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  @Log3
+  getPriceWithTax(@Log4 tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
+It's important to understand that first of all they are running without us instantiating this product.
+```typescript
+const p1 = new Product('Book TS', 25);
+const p2 = new Product('Book JS', 20);
+```
+So it's not instantiation of this class that matters, all this decorators no matter if it was a property, accessor, method or parameter decorartor, they all executed whe we defined this class. It's important to undrstant these are not decorator that run at runtime, when we call them method or when we work with a property this is not what they do. Instead these decorators allow us to do additional behind scenes set up work when a class is defined, back to that metaprogramming concept. We can use the decorator to do some behind the scenes work to then set up some code that should run whetever this is called, to add extra metadata or store some data about a propety somewhere else in our project or library.
+
+We can replace our original constructor function of a class, we can take advantage the feature that decorator offer us that we can return new value or a new constructor function.
+
+```typescript
+function WithTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE FACTORY..');
+  return function<T extends {new(...args: any []): { name: string }}>(originalConstructor: T) {
+    return class extends originalConstructor {
+      constructor(..._: any []) {
+        super();
+        console.log('Rendering template..');
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector('h1')!.textContent = this.name;
+        }
+      }
+    }
+  }
+}
+
+@Logger('Logging person...')
+@WithTemplate('<h1>My Person Object</h1>', 'app')
+class Person {
+  name = 'galbeiroc';
+
+  constructor() {
+    console.log('Creating person object....');
+  }
+}
+const person = new Person();
+```
+
+**Autobind Decorator**
+This is a neat example how we can utilize decorators to build a quite amazing functionality and save we the hassle of manually calling bind everywhere.
+
+```typescript
+function autoBind(_: any, _: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this); // bind
+      return boundFunction;
+    }
+  };
+  return adjDescriptor;
+}
+
+class Printer {
+  message = 'This works!';
+
+  @autoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+
+const pp = new Printer();
+
+const button = document.querySelector('button')!;
+// button.addEventListener('click', pp.showMessage.bind(pp)); // defualt JS
+button.addEventListener('click', pp.showMessage);
+```
+
+**Validation With Decorator**
+This is another example to use decorators.
+
+```typescript
+function required(target: any, propName: string) {
+  registeredValidators[target.constructor.name] = {
+      ...registeredValidators[target.constructor.name],
+      [propName]: [...(registeredValidators[target.constructor.name]?.[propName] ?? []), 'required']
+  };
+}
+
+function positiveNumber(target: any, propName: string) {
+  registeredValidators[target.constructor.name] = {
+      ...registeredValidators[target.constructor.name],
+      [propName]: [...(registeredValidators[target.constructor.name]?.[propName] ?? []), 'positive']
+  };
+}
+
+function validate(obj: any) {
+  const objValidatorConfig = registeredValidators[obj.constructor.name];
+  if(!objValidatorConfig) {
+    return true;
+  }
+  let isValid = true
+  for (const prop in objValidatorConfig) {
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case 'required':
+          isValid = isValid && !!obj[prop];
+          break;
+        case 'positive':
+          isValid = isValid && obj[prop] > 0;
+          break;
+      }
+    }
+  }
+  return isValid;
+}
+
+class Course {
+  @required
+  title: string;
+  @positiveNumber
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+const courseForm = document.querySelector('form')!;
+courseForm.addEventListener('submit', event => {
+  event.preventDefault();
+  const titleEl = document.getElementById('title') as HTMLInputElement;
+  const priceEl = document.getElementById('price') as HTMLInputElement;
+
+  const title = titleEl.value;
+  const price = +priceEl.value;
+  const createdCourse = new Course(title, price);
+
+  if (!validate(createdCourse)) {
+    alert('Invalid input, please try again!');
+    return;
+  }
+  console.log('=>>>', createdCourse);
+});
+```
+
+[Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###

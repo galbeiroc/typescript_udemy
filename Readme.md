@@ -1510,6 +1510,40 @@ class Person {
 const person = new Person();
 ```
 
+**Autobind Decorator**
+This is a neat example how we can utilize decorators to build a quite amazing functionality and save we the hassle of manually calling bind everywhere.
+
+```typescript
+function autoBind(_: any, _: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this); // bind
+      return boundFunction;
+    }
+  };
+  return adjDescriptor;
+}
+
+class Printer {
+  message = 'This works!';
+
+  @autoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+
+const pp = new Printer();
+
+const button = document.querySelector('button')!;
+// button.addEventListener('click', pp.showMessage.bind(pp)); // defualt JS
+button.addEventListener('click', pp.showMessage);
+```
+
 ### 09- Time to Practice - Full Project ###
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###

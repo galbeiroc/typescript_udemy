@@ -1616,6 +1616,9 @@ courseForm.addEventListener('submit', event => {
 [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
 ### 09- Time to Practice - Full Project ###
+
+[HTML Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
+
 ### 10- Working with Namespaces & Modules ###
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###

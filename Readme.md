@@ -1620,6 +1620,8 @@ courseForm.addEventListener('submit', event => {
 [HTML Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
 
 ### 10- Working with Namespaces & Modules ###
+We have three options for splitting code in multiple code files. The first option would be to simply write code multiple code files, multiple TypeScript files. TypeScript will then automatically compile all code files in the source directory and manually import the compiled JavaScript files in HTML. The other option is namespaces is a TypeScript feature, a syntax feature. We can add special code to our code to use this feature and it allow us to basically to group code together below a namespace and then import namespaces into other files. So we can have a namespaces per file for example. Import another file into yet another file and tap into that namespace which lives in another file from that importing file. The more important and modern option is to use ES6 import/export also known as ES6 modules beacuse it turns out that totally detached from TypeScript modern JavaScript has a solutions for this problem as well. Modern JavaScript out of the box supports import and export statements which allow us to state which file depends of which other file and then we have all those individual files.
+
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

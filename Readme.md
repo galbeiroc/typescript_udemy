@@ -1783,6 +1783,10 @@ import { autobind as Autobind } from '../decorators/autobind.js';
 ```
 * The runs once when the file is imported for the first time by any other file. If another file then imports that same file again, it doesn't run again.
 
+***Useful Resources & Links**
+[JavaScript Modules (Overview)](https://medium.com/computed-comparisons/commonjs-vs-amd-vs-requirejs-vs-es6-modules-2e814b114a0b)
+[More on ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

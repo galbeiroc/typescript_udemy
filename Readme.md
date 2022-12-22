@@ -1620,6 +1620,173 @@ courseForm.addEventListener('submit', event => {
 [HTML Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
 
 ### 10- Working with Namespaces & Modules ###
+We have three options for splitting code in multiple code files. The first option would be to simply write code multiple code files, multiple TypeScript files. TypeScript will then automatically compile all code files in the source directory and manually import the compiled JavaScript files in HTML. The other option is namespaces is a TypeScript feature, a syntax feature. We can add special code to our code to use this feature and it allow us to basically to group code together below a namespace and then import namespaces into other files. So we can have a namespaces per file for example. Import another file into yet another file and tap into that namespace which lives in another file from that importing file. The more important and modern option is to use ES6 import/export also known as ES6 modules beacuse it turns out that totally detached from TypeScript modern JavaScript has a solutions for this problem as well. Modern JavaScript out of the box supports import and export statements which allow us to state which file depends of which other file and then we have all those individual files.
+
+
+***namespace***
+```typescript
+// autobind decorator - autobind.ts
+namespace App {
+  export function autobind(
+    _: any,
+    _2: string,
+    descriptor: PropertyDescriptor
+  ) {
+    const originalMethod = descriptor.value;
+    const adjustedDescriptor: PropertyDescriptor = {
+      configurable: true,
+      get() {
+        const boundFunction = originalMethod.bind(this);
+        return boundFunction;
+      }
+    };
+    return adjustedDescriptor;
+  }
+}
+
+// ProjectItem Class - project-item.ts
+/// <reference path='base-components.ts' />
+/// <reference path='../decorators/autobind.ts' />
+/// <reference path='../models/project.ts' />
+/// <reference path='../models/drag-drop.ts' />
+
+namespace App {
+  export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
+    private project: Project;
+
+    get persons() {
+      if (this.project.people === 1) {
+        return '1 person ';
+      } else {
+        return `${this.project.people} persons `;
+      }
+    }
+
+    constructor(hostId: string, project: Project) {
+      super('single-project', hostId, false, project.id);
+      this.project = project;
+
+      this.configure();
+      this.renderContent();
+    }
+
+    @autobind
+    dragStartHandler(event: DragEvent) {
+      event.dataTransfer!.setData('text/plain', this.project.id);
+      event.dataTransfer!.effectAllowed = 'move';
+    };
+
+
+    dragEndHandler(_: DragEvent) {
+      console.log('end drag');
+    };
+
+    configure() {
+      this.element.addEventListener('dragstart', this.dragStartHandler);
+      this.element.addEventListener('dragend', this.dragEndHandler);
+    };
+
+    renderContent() {
+      this.element.querySelector('h2')!.textContent = this.project.title;
+      this.element.querySelector('h3')!.textContent = this.persons + 'assigned';
+      this.element.querySelector('p')!.textContent = this.project.description;
+    };
+  }
+}
+```
+
+***ES Modules***
+```typescript
+// autobind decorator - autobind.ts
+export function autobind(
+  _: any,
+  _2: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFunction = originalMethod.bind(this);
+      return boundFunction;
+    }
+  };
+  return adjustedDescriptor;
+}
+
+// ProjectItem Class - - project-item.ts
+import { Project } from '../models/project.js';
+import { Draggable } from '../models/drag-drop.js';
+import { Component } from './base-components.js';
+import { autobind } from '../decorators/autobind.js';
+
+export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
+  private project: Project;
+
+  get persons() {
+    if (this.project.people === 1) {
+      return '1 person ';
+    } else {
+      return `${this.project.people} persons `;
+    }
+  }
+
+  constructor(hostId: string, project: Project) {
+    super('single-project', hostId, false, project.id);
+    this.project = project;
+
+    this.configure();
+    this.renderContent();
+  }
+
+  @autobind
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer!.setData('text/plain', this.project.id);
+    event.dataTransfer!.effectAllowed = 'move';
+  };
+
+
+  dragEndHandler(_: DragEvent) {
+    console.log('end drag');
+  };
+
+  configure() {
+    this.element.addEventListener('dragstart', this.dragStartHandler);
+    this.element.addEventListener('dragend', this.dragEndHandler);
+  };
+
+  renderContent() {
+    this.element.querySelector('h2')!.textContent = this.project.title;
+    this.element.querySelector('h3')!.textContent = this.persons + 'assigned';
+    this.element.querySelector('p')!.textContent = this.project.description;
+  };
+}
+```
+* We can have one export default per file
+```typescript
+// Component Base Class
+export default abstract class Component<T extends HTMLElement, U extends HTMLElement> {...}
+// other file
+import Cmp from './base-components.js';
+```
+* we can group that all into one object
+```typescript
+import * as Validation from '../utils/validations.js';
+...
+const titleValidatable: Validation.Validatable = { value: enteredTitle, required: true };
+```
+* we assign alias inside of the curly braces for renaming import
+```typescript
+import { autobind as Autobind } from '../decorators/autobind.js';
+...
+@Autobind
+```
+* The runs once when the file is imported for the first time by any other file. If another file then imports that same file again, it doesn't run again.
+
+***Useful Resources & Links**
+[JavaScript Modules (Overview)](https://medium.com/computed-comparisons/commonjs-vs-amd-vs-requirejs-vs-es6-modules-2e814b114a0b)
+[More on ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

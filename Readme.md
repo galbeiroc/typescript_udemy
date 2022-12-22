@@ -1695,6 +1695,76 @@ namespace App {
 }
 ```
 
+***ES Modules***
+```typescript
+// autobind decorator - autobind.ts
+export function autobind(
+  _: any,
+  _2: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFunction = originalMethod.bind(this);
+      return boundFunction;
+    }
+  };
+  return adjustedDescriptor;
+}
+
+// ProjectItem Class - - project-item.ts
+import { Project } from '../models/project.js';
+import { Draggable } from '../models/drag-drop.js';
+import { Component } from './base-components.js';
+import { autobind } from '../decorators/autobind.js';
+
+export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
+  private project: Project;
+
+  get persons() {
+    if (this.project.people === 1) {
+      return '1 person ';
+    } else {
+      return `${this.project.people} persons `;
+    }
+  }
+
+  constructor(hostId: string, project: Project) {
+    super('single-project', hostId, false, project.id);
+    this.project = project;
+
+    this.configure();
+    this.renderContent();
+  }
+
+  @autobind
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer!.setData('text/plain', this.project.id);
+    event.dataTransfer!.effectAllowed = 'move';
+  };
+
+
+  dragEndHandler(_: DragEvent) {
+    console.log('end drag');
+  };
+
+  configure() {
+    this.element.addEventListener('dragstart', this.dragStartHandler);
+    this.element.addEventListener('dragend', this.dragEndHandler);
+  };
+
+  renderContent() {
+    this.element.querySelector('h2')!.textContent = this.project.title;
+    this.element.querySelector('h3')!.textContent = this.persons + 'assigned';
+    this.element.querySelector('p')!.textContent = this.project.description;
+  };
+}
+
+
+```
+
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

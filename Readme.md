@@ -1761,9 +1761,27 @@ export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> impl
     this.element.querySelector('p')!.textContent = this.project.description;
   };
 }
-
-
 ```
+* We can have one export default per file
+```typescript
+// Component Base Class
+export default abstract class Component<T extends HTMLElement, U extends HTMLElement> {...}
+// other file
+import Cmp from './base-components.js';
+```
+* we can group that all into one object
+```typescript
+import * as Validation from '../utils/validations.js';
+...
+const titleValidatable: Validation.Validatable = { value: enteredTitle, required: true };
+```
+* we assign alias inside of the curly braces for renaming import
+```typescript
+import { autobind as Autobind } from '../decorators/autobind.js';
+...
+@Autobind
+```
+* The runs once when the file is imported for the first time by any other file. If another file then imports that same file again, it doesn't run again.
 
 ### 12- Webpack and TypeScript ###
 ### 13- 3rd Party Libraries & TypeScript ###

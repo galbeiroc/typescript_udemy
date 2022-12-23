@@ -1788,5 +1788,11 @@ import { autobind as Autobind } from '../decorators/autobind.js';
 [More on ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 
 ### 12- Webpack and TypeScript ###
+***What is Webpack?***
+[Webpack](https://webpack.js.org/) is a tool help us bundle our files together. Webpack is a bundling & "Build Orchestation" tool that help us to reduce the amount of HTTP requests by bundling code together. So that we write code split across multiples files but Webpack then takes all these files and bundles them together. In addoition Webpack is capable of doing more. Optmize our code and also allow us to add more build steps, more build tools.
+* Code bundles, less imports required
+* Optimized (minified) code, less code to download
+* More build steps can be added easily
+
 ### 13- 3rd Party Libraries & TypeScript ###
 ### 14- React + TypeScript & node + TypeScript ###

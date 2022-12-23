@@ -27,4 +27,3 @@ export function validate(validatableInput: Validatable) {
   }
   return isValid;
 }
-

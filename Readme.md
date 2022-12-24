@@ -1795,4 +1795,6 @@ import { autobind as Autobind } from '../decorators/autobind.js';
 * More build steps can be added easily
 
 ### 13- 3rd Party Libraries & TypeScript ###
+***declare***
+declare help us to tell TypeScript that variables o features exists, it can be globally.
 ### 14- React + TypeScript & node + TypeScript ###

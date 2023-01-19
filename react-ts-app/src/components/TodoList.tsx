@@ -7,7 +7,7 @@ interface TodoListProps {
 const TodoList: React.FC<TodoListProps> = ({ items }) => {
   return (
     <ul>
-      {items.map((todo) => <li id={todo.id}>{todo.text}</li>)}
+      {items.map((todo) => <li key={todo.id}>{todo.text}</li>)}
     </ul>
   )
 }
